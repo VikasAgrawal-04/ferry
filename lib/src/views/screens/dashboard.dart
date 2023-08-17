@@ -13,8 +13,9 @@ class _DashBoardState extends State<DashBoard> {
     TextTheme _theme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: Text(
-          "Yummy Ferry",
+          "Ferry",
           style: _theme.bodySmall,
         ),
       ),

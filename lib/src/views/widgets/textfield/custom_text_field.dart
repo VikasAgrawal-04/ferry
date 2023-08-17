@@ -103,6 +103,7 @@ class _CustomTextFieldState extends State<CustomTextFieldNew> {
         inputFormatters: widget.isNumber
             ? [
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                LengthLimitingTextInputFormatter(10)
               ]
             : widget.type == "username"
                 ? [
@@ -124,22 +125,21 @@ class _CustomTextFieldState extends State<CustomTextFieldNew> {
             alignLabelWithHint: true,
             isDense: true,
             contentPadding: widget.contentPadding ??
-                EdgeInsets.only(top: 1.h, left: 4.w, bottom: 1.h),
+                EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.2.h),
             hintText: widget.hint,
             counterText: '',
             filled: true,
             fillColor: widget.fillColor ?? AppColors.greyBg,
             enabledBorder: widget.enabledBorder ??
                 OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide:
-                      BorderSide(color: Theme.of(context).disabledColor),
-                ),
+                    gapPadding: 0,
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none),
             focusedBorder: widget.focusedBorder ??
                 OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
-                ),
+                    gapPadding: 0,
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none),
             prefixIcon: widget.prefIcon != null ? Icon(widget.prefIcon) : null,
             suffixIcon: widget.type == "password"
                 ? IconButton(
