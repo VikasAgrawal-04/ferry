@@ -116,6 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                               onPressed: () {},
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith(
+                                    (states) => Colors.transparent),
+                              ),
                               child: Text("Forgot Password?",
                                   style: theme.titleSmall)),
                         ),

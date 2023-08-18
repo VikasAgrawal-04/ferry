@@ -130,8 +130,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState!.validate()) {
       if ((passwordController.text == confirmPasswordController.text)) {
         EasyLoading.show();
-        // final result = await authController.login(
-        //     number: phoneController.text, password: passwordController.text);
+        await authController.register(
+            number: phoneController.text,
+            password: passwordController.text,
+            name: nameController.text);
         EasyLoading.dismiss();
       } else {
         EasyLoading.showError('Passwords do not match. Please try again.');

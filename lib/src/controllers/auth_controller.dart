@@ -30,4 +30,23 @@ class AuthController extends GetxController {
     });
     return success;
   }
+
+  Future<bool> register(
+      {required String name,
+      required String number,
+      required String password}) async {
+    bool success = true;
+    final successOrFailure = await _services.register(
+        name: name, number: number, password: password);
+    successOrFailure.fold((l) => debugPrint("Failure In Login $l"), (r) {
+      if (r.success) {
+        success = true;
+        EasyLoading.showSuccess(r.message);
+      } else {
+        success = false;
+        EasyLoading.showError(r.message);
+      }
+    });
+    return success;
+  }
 }

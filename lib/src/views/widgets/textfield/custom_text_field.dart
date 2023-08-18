@@ -161,12 +161,12 @@ class _CustomTextFieldState extends State<CustomTextFieldNew> {
                 : widget.icon != null
                     ? IconButton(
                         constraints: const BoxConstraints(),
-                        iconSize: 18,
+                        iconSize: 24,
                         padding: EdgeInsets.zero,
                         onPressed: widget.onTap,
                         icon: Icon(
                           widget.icon,
-                          color: AppColors.btnPrimary,
+                          color: Colors.black54,
                         ))
                     : null));
   }

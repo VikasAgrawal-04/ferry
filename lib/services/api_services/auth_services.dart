@@ -3,7 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:goa/src/core/utils/constants/api_endpoints.dart';
 import 'package:goa/src/core/utils/errors/failures.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
-import 'package:goa/src/models/auth/login_response.dart';
+import 'package:goa/src/models/auth/response/login_response.dart';
+
+import '../../src/models/auth/response/register_response.dart';
 
 class AuthServices {
   final Dio dio;
@@ -19,6 +21,23 @@ class AuthServices {
         "usertype": "N"
       });
       return Right(LoginResponse.fromJson(response!));
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
+
+  Future<Either<Failure, RegisterResponse>> register(
+      {required String name,
+      required String number,
+      required String password}) async {
+    try {
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.createUser, queryParams: {
+        "mobile": number,
+        "password": password,
+        "fullname": name
+      });
+      return Right(RegisterResponse.fromJson(response!));
     } on ServerFailure catch (error) {
       return Left(ServerFailure(message: error.message.toString()));
     }

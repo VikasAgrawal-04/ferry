@@ -4,8 +4,18 @@ import 'package:sizer/sizer.dart';
 
 class ApplicationTheme {
   static ThemeData lightTheme = ThemeData(
-    colorScheme: const ColorScheme.light(),
+    scaffoldBackgroundColor: AppColors.scaffoldPrimary,
     fontFamily: 'Saira',
+    iconTheme: const IconThemeData(color: Colors.black),
+    appBarTheme: AppBarTheme(
+      elevation: 0,
+      titleTextStyle: TextStyle(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w600,
+          fontFamily: 'Geologica'),
+      backgroundColor: Colors.white,
+      iconTheme: IconThemeData(color: AppColors.appBarIcon, size: 3.h),
+    ),
     textTheme: TextTheme(
         displayLarge: TextStyle(
             fontSize: 20.sp,
