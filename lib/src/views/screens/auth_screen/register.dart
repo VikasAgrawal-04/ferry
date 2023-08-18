@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/auth_controller.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:sizer/sizer.dart';
@@ -21,12 +22,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  FocusNode _focusNode1 = FocusNode();
+  FocusNode _focusNode2 = FocusNode();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Column(
@@ -76,22 +80,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       CustomTextFieldNew(
                         control: passwordController,
                         type: "password",
-                        hint: "Enter Confirm Password",
+                        hint: "Enter Password",
                         isRequired: true,
+                        focusNode: _focusNode1,
                         keyboardType: TextInputType.text,
                         isNumber: false,
                         style: theme.bodySmall,
+                        onEditingComplete: () {
+                          _focusNode1.unfocus();
+                          FocusScope.of(context).requestFocus(_focusNode2);
+                        },
                         textInputAction: TextInputAction.next,
                       ),
                       SizedBox(height: 1.h),
                       CustomTextFieldNew(
                         control: confirmPasswordController,
                         type: "password",
-                        hint: "Enter Password",
+                        focusNode: _focusNode2,
+                        hint: "Enter Confirm Password",
                         isRequired: true,
                         keyboardType: TextInputType.text,
                         isNumber: false,
                         style: theme.bodySmall,
+                        onEditingComplete: () async {
+                          await api();
+                        },
                         textInputAction: TextInputAction.done,
                       ),
                       SizedBox(height: 2.h),
@@ -135,6 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             password: passwordController.text,
             name: nameController.text);
         EasyLoading.dismiss();
+        Get.back();
       } else {
         EasyLoading.showError('Passwords do not match. Please try again.');
       }

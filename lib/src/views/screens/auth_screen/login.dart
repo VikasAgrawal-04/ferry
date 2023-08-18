@@ -60,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
     TextTheme theme = Theme.of(context).textTheme;
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Stack(
           children: [

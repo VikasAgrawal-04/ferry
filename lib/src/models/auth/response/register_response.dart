@@ -13,25 +13,25 @@ String registerResponseToJson(RegisterResponse data) =>
 class RegisterResponse {
   bool success;
   String message;
-  RegisterData data;
+  RegisterData? data;
 
   RegisterResponse({
     required this.success,
     required this.message,
-    required this.data,
+    this.data,
   });
 
   factory RegisterResponse.fromJson(Map<String, dynamic> json) =>
       RegisterResponse(
         success: json["success"],
         message: json["message"],
-        data: RegisterData.fromJson(json["data"]),
+        data: json["data"] == null ? null : RegisterData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
         "success": success,
         "message": message,
-        "data": data.toJson(),
+        "data": data?.toJson(),
       };
 }
 

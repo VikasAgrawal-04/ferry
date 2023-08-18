@@ -38,13 +38,32 @@ class AuthController extends GetxController {
     bool success = true;
     final successOrFailure = await _services.register(
         name: name, number: number, password: password);
-    successOrFailure.fold((l) => debugPrint("Failure In Login $l"), (r) {
+    successOrFailure.fold((l) => debugPrint("Failure In Login $l"), (r) async {
       if (r.success) {
-        success = true;
-        EasyLoading.showSuccess(r.message);
+        bool result = await verfiyOtp(number: number, otp: r.data!.otp);
+        if (result) {
+          success = true;
+          EasyLoading.showSuccess(r.message);
+        }
       } else {
         success = false;
         EasyLoading.showError(r.message);
+      }
+    });
+    return success;
+  }
+
+  Future<bool> verfiyOtp({required String number, required String otp}) async {
+    bool success = true;
+    final successOrFailure =
+        await _services.verfiyOtp(number: number, otp: otp);
+    successOrFailure.fold((l) => debugPrint("Failure In Login $l"), (r) {
+      if (r['success']) {
+        success = true;
+        EasyLoading.showSuccess(r['message']);
+      } else {
+        success = false;
+        EasyLoading.showError(r['message']);
       }
     });
     return success;

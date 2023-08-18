@@ -42,4 +42,16 @@ class AuthServices {
       return Left(ServerFailure(message: error.message.toString()));
     }
   }
+
+  Future<Either<Failure, Map<String, dynamic>>> verfiyOtp(
+      {required String number, required String otp}) async {
+    try {
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.verifyOtp,
+          queryParams: {"mobile": number, "otp": otp, "usertype": "N"});
+      return Right(response!);
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
 }
