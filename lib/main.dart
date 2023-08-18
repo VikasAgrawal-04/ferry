@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/route_manager.dart';
@@ -17,7 +18,13 @@ void main() async {
   SharedPreferences.getInstance().then((prefs) {
     // Initialize SharedPreferences before running the app
     Helpers.prefs = prefs; // Set the instance in your Helpers class
-    runApp(MyApp());
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ));
+    runApp(const MyApp());
     configLoading();
   });
 }

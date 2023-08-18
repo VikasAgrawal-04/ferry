@@ -8,11 +8,9 @@ class ApplicationTheme {
     fontFamily: 'Saira',
     iconTheme: const IconThemeData(color: Colors.black),
     appBarTheme: AppBarTheme(
+      titleSpacing: 0,
+      centerTitle: true,
       elevation: 0,
-      titleTextStyle: TextStyle(
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w600,
-          fontFamily: 'Geologica'),
       backgroundColor: Colors.white,
       iconTheme: IconThemeData(color: AppColors.appBarIcon, size: 3.h),
     ),

@@ -29,12 +29,13 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size(100.w, 12.h),
+        preferredSize: Size(100.w, 11.h),
         child: AppBar(
+          toolbarHeight:4.h,
           centerTitle: true,
-          title: Text('Buy Pass', style: _theme.bodyMedium),
+          title: Text('Buy Pass', style: _theme.displayMedium),
           flexibleSpace: Padding(
-            padding: EdgeInsets.only(top: 9.h, left: 4.w, right: 4.w),
+            padding: EdgeInsets.only(top: 8.5.h, left: 4.w, right: 4.w,bottom: 1.h),
             child: CustomTextFieldNew(
                 control: searchController,
                 isRequired: false,

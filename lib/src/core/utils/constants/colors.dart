@@ -13,6 +13,7 @@ class AppColors {
 
   //Button Color
   static Color btnPrimary = hexToColor('#ff8b45');
+  static Color btnYellow = hexToColor('#FFBA4D');
 
   //Icon Color
   static Color primaryIcon = hexToColor("#EBEDF2");
