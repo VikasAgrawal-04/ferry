@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/auth_controller.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:sizer/sizer.dart';
