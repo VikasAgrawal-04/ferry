@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:goa/src/controllers/auth_controller.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../widgets/textfield/custom_text_field.dart';
 

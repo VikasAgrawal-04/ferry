@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goa/src/core/utils/constants/colors.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CustomButtonNew extends StatelessWidget {
   final String? text;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goa/src/core/utils/constants/colors.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CustomTextFieldNew extends StatefulWidget {
   final Function()? textFieldTap;

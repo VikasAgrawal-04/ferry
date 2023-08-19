@@ -8,7 +8,7 @@ import 'package:goa/src/controllers/auth_controller.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sizer/sizer.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -69,11 +69,6 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 SizedBox(height: 15.h),
                 Image.asset("assets/images/main7.PNG"),
-                // SvgPicture.asset(
-                //   "assets/images/svg/main1_adobe_express.svg",
-                //   height: 40.h,
-                //   width: 100.w,
-                // ),
                 SizedBox(height: 2.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),
