@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/src/core/utils/constants/colors.dart';
 import 'package:goa/src/views/screens/routes_screen/route_listing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 class DashBoard extends StatefulWidget {
@@ -29,7 +30,6 @@ class _DashBoardState extends State<DashBoard> {
   ];
   @override
   Widget build(BuildContext context) {
-    TextTheme _theme = Theme.of(context).textTheme;
     return Scaffold(
       body: RouteListingScreen(),
       bottomNavigationBar: Obx(
@@ -69,7 +69,12 @@ class _DashBoardState extends State<DashBoard> {
     );
   }
 
-  void _onItemTap(int index) {
+  Future<void> _onItemTap(int index) async {
     _selectedIndex.value = index;
+    if (index == 3) {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.clear();
+    }
   }
 }

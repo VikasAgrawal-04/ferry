@@ -2,9 +2,10 @@ import 'package:get/route_manager.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/middlewares/global_middleware.dart';
 import 'package:goa/src/views/screens/auth_screen/login.dart';
-import 'package:goa/src/views/screens/auth_screen/register.dart';
 import 'package:goa/src/views/screens/dashboard.dart';
 import 'package:goa/src/views/screens/routes_screen/route_listing.dart';
+
+import '../../src/views/screens/auth_screen/register.dart';
 
 class AppRouter {
   static List<GetPage> routes = [

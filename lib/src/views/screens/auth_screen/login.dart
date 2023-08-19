@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/auth_controller.dart';
@@ -69,11 +68,12 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 15.h),
-                SvgPicture.asset(
-                  "assets/images/svg/main1_adobe_express.svg",
-                  height: 40.h,
-                  width: 100.w,
-                ),
+                Image.asset("assets/images/main7.PNG"),
+                // SvgPicture.asset(
+                //   "assets/images/svg/main1_adobe_express.svg",
+                //   height: 40.h,
+                //   width: 100.w,
+                // ),
                 SizedBox(height: 2.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),

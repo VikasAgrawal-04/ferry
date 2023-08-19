@@ -29,13 +29,14 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size(100.w, 11.h),
+        preferredSize: Size(100.w, 12.5.h),
         child: AppBar(
-          toolbarHeight:4.h,
+          toolbarHeight: 4.h,
           centerTitle: true,
           title: Text('Buy Pass', style: _theme.displayMedium),
           flexibleSpace: Padding(
-            padding: EdgeInsets.only(top: 8.5.h, left: 4.w, right: 4.w,bottom: 1.h),
+            padding:
+                EdgeInsets.only(top: 10.h, left: 4.w, right: 4.w, bottom: 1.h),
             child: CustomTextFieldNew(
                 control: searchController,
                 isRequired: false,
@@ -47,22 +48,24 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
           ),
         ),
       ),
-      body: Obx(() => ListView.builder(
-          itemCount: controller.routesName.length,
-          padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
-          itemBuilder: (context, index) {
-            final data = controller.routesName[index];
-            return InkWell(
-              splashColor: Colors.transparent,
-              onTap: () {},
-              child: Card(
-                child: Container(
-                    margin:
-                        EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w),
-                    child: Text(data.routename, textAlign: TextAlign.center)),
-              ),
-            );
-          })),
+      body: Obx(
+        () => ListView.builder(
+            itemCount: controller.routesName.length,
+            padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
+            itemBuilder: (context, index) {
+              final data = controller.routesName[index];
+              return InkWell(
+                splashColor: Colors.transparent,
+                onTap: () {},
+                child: Card(
+                  child: Container(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w),
+                      child: Text(data.routename, textAlign: TextAlign.center)),
+                ),
+              );
+            }),
+      ),
     );
   }
 }

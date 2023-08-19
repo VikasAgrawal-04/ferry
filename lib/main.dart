@@ -24,8 +24,8 @@ void main() async {
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
-    runApp(const MyApp());
     configLoading();
+    runApp(const MyApp());
   });
 }
 
