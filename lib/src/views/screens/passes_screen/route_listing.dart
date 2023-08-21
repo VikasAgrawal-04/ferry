@@ -6,6 +6,8 @@ import 'package:goa/src/controllers/route_controller.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import '../../../core/utils/constants/colors.dart';
+
 class RouteListingScreen extends StatefulWidget {
   const RouteListingScreen({super.key});
 
@@ -63,10 +65,15 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
                   Get.toNamed(AppRoutes.vehicleListing, arguments: data);
                 },
                 child: Card(
+                  color: AppColors.greenBg,
                   child: Container(
                       margin:
                           EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w),
-                      child: Text(data.routename, textAlign: TextAlign.center)),
+                      child: Text(data.routename,
+                          textAlign: TextAlign.center,
+                          style: theme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white))),
                 ),
               );
             }),

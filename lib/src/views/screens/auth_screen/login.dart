@@ -173,7 +173,6 @@ class _LoginScreenState extends State<LoginScreen> {
       EasyLoading.show();
       final result = await authController.login(
           number: phoneController.text, password: passwordController.text);
-      EasyLoading.dismiss();
       Get.offAndToNamed(AppRoutes.dashboard);
       return result;
     } else {

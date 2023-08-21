@@ -10,6 +10,7 @@ class AppColors {
   static const Color scaffoldPrimary = Color(0xFFF6F8FB);
   static Color greyBg = hexToColor("#EBEDF2");
   static Color appBarIcon = hexToColor('#202A44');
+  static Color greenBg = hexToColor('#6ba850');
 
   //Button Color
   static Color btnPrimary = hexToColor('#ff8b45');

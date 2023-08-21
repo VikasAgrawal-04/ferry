@@ -26,22 +26,24 @@ class _VehicleScreenState extends State<VehicleScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
-        child: Column(
-          children: [
-            vehicle(
-                name: '4 Wheeler',
-                img: 'assets/images/4_wheeler.PNG',
-                onTap: () async {
-                  await api(routeId: data.routeid, vehicleType: "4");
-                }),
-            SizedBox(height: 4.h),
-            vehicle(
-                name: '2 Wheeler',
-                img: 'assets/images/2_wheeler.PNG',
-                onTap: () async {
-                  await api(routeId: data.routeid, vehicleType: "2");
-                })
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              vehicle(
+                  name: '4 Wheeler',
+                  img: 'assets/images/4_wheeler.PNG',
+                  onTap: () async {
+                    await api(routeId: data.routeid, vehicleType: "4");
+                  }),
+              SizedBox(height: 4.h),
+              vehicle(
+                  name: '2 Wheeler',
+                  img: 'assets/images/2_wheeler.PNG',
+                  onTap: () async {
+                    await api(routeId: data.routeid, vehicleType: "2");
+                  })
+            ],
+          ),
         ),
       ),
     );

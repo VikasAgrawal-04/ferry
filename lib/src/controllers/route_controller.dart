@@ -17,6 +17,7 @@ class RouteController extends GetxController {
 
   //List of Passes
   final passes = <Pass>[].obs;
+  final passesImg = ['assets/images/6.PNG', 'assets/images/9.PNG'];
 
   Future<void> fetchRoutes() async {
     final successOrFailure = await _service.fetchRoutes();
@@ -26,6 +27,7 @@ class RouteController extends GetxController {
         routesName.addAll(r.routes);
       }
     });
+    EasyLoading.dismiss();
   }
 
   Future<bool> getRoutePasses(

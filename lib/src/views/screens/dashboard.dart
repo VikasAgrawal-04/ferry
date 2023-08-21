@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/src/core/utils/constants/colors.dart';
+import 'package:goa/src/views/screens/cart_screen/cart_screen.dart';
+import 'package:goa/src/views/screens/history_screen/pass_history_screen.dart';
+import 'package:goa/src/views/screens/info_screen/info_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
+import 'package:goa/src/views/screens/settings_screen/setting_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DashBoard extends StatefulWidget {
   const DashBoard({super.key});
@@ -28,53 +31,56 @@ class _DashBoardState extends State<DashBoard> {
     Icons.settings,
     Icons.info_outlined,
   ];
+  final List<Widget> pages = [
+    CartScreen(),
+    PassHistoryScreen(),
+    RouteListingScreen(),
+    SettingScreen(),
+    InfoScreen()
+  ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RouteListingScreen(),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-            showSelectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            showUnselectedLabels: false,
-            selectedItemColor: Colors.blue,
-            iconSize: 30,
-            selectedIconTheme: const IconThemeData(color: Colors.black87),
-            unselectedItemColor: Colors.black54,
-            currentIndex: _selectedIndex.value,
-            onTap: _onItemTap,
-            items: List.generate(labels.length, (index) {
-              final label = labels[index];
-              final icon = icons[index];
-              return BottomNavigationBarItem(
-                label: label,
-                icon: Container(
-                  padding: EdgeInsets.all(1.h),
-                  decoration: index == _selectedIndex.value
-                      ? BoxDecoration(
-                          color: AppColors.btnYellow,
-                          borderRadius: BorderRadius.circular(100),
-                        )
-                      : null,
-                  child: Icon(
-                    icon,
-                    color: index == _selectedIndex.value
-                        ? Colors.white
-                        : AppColors.appBarIcon,
-                  ),
+    return Obx(
+      () => Scaffold(
+        body: pages[_selectedIndex.value],
+        bottomNavigationBar: BottomNavigationBar(
+          showSelectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          showUnselectedLabels: false,
+          selectedItemColor: Colors.blue,
+          iconSize: 30,
+          selectedIconTheme: const IconThemeData(color: Colors.black87),
+          unselectedItemColor: Colors.black54,
+          currentIndex: _selectedIndex.value,
+          onTap: _onItemTap,
+          items: List.generate(labels.length, (index) {
+            final label = labels[index];
+            final icon = icons[index];
+            return BottomNavigationBarItem(
+              label: label,
+              icon: Container(
+                padding: EdgeInsets.all(1.h),
+                decoration: index == _selectedIndex.value
+                    ? BoxDecoration(
+                        color: AppColors.btnYellow,
+                        borderRadius: BorderRadius.circular(100),
+                      )
+                    : null,
+                child: Icon(
+                  icon,
+                  color: index == _selectedIndex.value
+                      ? Colors.white
+                      : AppColors.appBarIcon,
                 ),
-              );
-            })),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }
 
   Future<void> _onItemTap(int index) async {
     _selectedIndex.value = index;
-    if (index == 3) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      sharedPreferences.clear();
-    }
   }
 }
