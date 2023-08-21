@@ -149,15 +149,15 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
             Positioned(
-              top: 8.h,
+              top: 8.5.h,
               left: 0,
               right: 0,
               child: Text(
                 "GOA\n ferry app",
                 style: theme.displayLarge?.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 40.sp,
-                  height: 1.1,
+                  fontSize: 30.sp,
+                  height: 1,
                 ),
                 textAlign: TextAlign.center,
               ),

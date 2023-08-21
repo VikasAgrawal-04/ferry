@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/src/core/utils/constants/colors.dart';
-import 'package:goa/src/views/screens/routes_screen/route_listing.dart';
+import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

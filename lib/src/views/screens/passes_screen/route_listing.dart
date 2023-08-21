@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/route_controller.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -24,7 +26,7 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    TextTheme _theme = Theme.of(context).textTheme;
+    TextTheme theme = Theme.of(context).textTheme;
     final controller = Get.find<RouteController>();
 
     return Scaffold(
@@ -33,7 +35,7 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
         child: AppBar(
           toolbarHeight: 4.h,
           centerTitle: true,
-          title: Text('Buy Pass', style: _theme.displayMedium),
+          title: Text('Buy Pass', style: theme.displayMedium),
           flexibleSpace: Padding(
             padding:
                 EdgeInsets.only(top: 10.h, left: 4.w, right: 4.w, bottom: 1.h),
@@ -56,7 +58,10 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
               final data = controller.routesName[index];
               return InkWell(
                 splashColor: Colors.transparent,
-                onTap: () {},
+                onTap: () {
+                  EasyLoading.show();
+                  Get.toNamed(AppRoutes.vehicleListing, arguments: data);
+                },
                 child: Card(
                   child: Container(
                       margin:

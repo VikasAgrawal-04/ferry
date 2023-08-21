@@ -12,4 +12,6 @@ class EndPoints {
 
   //Routes
   static const String getRoutes = 'get_routes_name.php';
+  static const String getRouteImg = 'get_route_image.php';
+  static const String getPassByRoute = 'get_pass_by_route.php';
 }

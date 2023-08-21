@@ -3,4 +3,6 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String routeListing = '/route-listing';
+  static const String vehicleListing = '/vehicle-listing';
+  static const String passDetails = '/pass-details';
 }

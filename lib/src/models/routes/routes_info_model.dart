@@ -11,7 +11,7 @@ String routeInfoToJson(RouteInfo data) => json.encode(data.toJson());
 class RouteInfo {
   bool success;
   String message;
-  List<Route> routes;
+  List<RouteDatum> routes;
 
   RouteInfo({
     required this.success,
@@ -22,7 +22,8 @@ class RouteInfo {
   factory RouteInfo.fromJson(Map<String, dynamic> json) => RouteInfo(
         success: json["success"],
         message: json["message"],
-        routes: List<Route>.from(json["routes"].map((x) => Route.fromJson(x))),
+        routes: List<RouteDatum>.from(
+            json["routes"].map((x) => RouteDatum.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,16 +33,16 @@ class RouteInfo {
       };
 }
 
-class Route {
+class RouteDatum {
   int routeid;
   String routename;
 
-  Route({
+  RouteDatum({
     required this.routeid,
     required this.routename,
   });
 
-  factory Route.fromJson(Map<String, dynamic> json) => Route(
+  factory RouteDatum.fromJson(Map<String, dynamic> json) => RouteDatum(
         routeid: json["routeid"],
         routename: json["routename"],
       );
