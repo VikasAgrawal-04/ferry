@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:goa/src/controllers/auth_controller.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
@@ -37,11 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 4.h),
-            SvgPicture.asset(
-              "assets/images/svg/main7_adobe_express.svg",
-              height: 50.h,
-              width: 100.w,
-            ),
+            Image.asset("assets/images/main7.PNG"),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 6.w),
               child: Form(
@@ -147,7 +142,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             password: passwordController.text,
             name: nameController.text);
         EasyLoading.dismiss();
-        Get.back();
       } else {
         EasyLoading.showError('Passwords do not match. Please try again.');
       }

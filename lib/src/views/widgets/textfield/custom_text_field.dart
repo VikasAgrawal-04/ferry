@@ -31,36 +31,40 @@ class CustomTextFieldNew extends StatefulWidget {
   final int? maxLine;
   final String? errortext;
   final TextStyle? hintStyle;
+  final TextAlign? textAlign;
+  final bool singleInput;
 
-  const CustomTextFieldNew({
-    Key? key,
-    this.textFieldTap,
-    this.onEditingComplete,
-    this.hint,
-    this.control,
-    this.hintStyle,
-    required this.isRequired,
-    this.contentPadding,
-    required this.keyboardType,
-    this.type,
-    this.maxLength,
-    required this.isNumber,
-    this.onChanged,
-    required this.textInputAction,
-    this.icon,
-    this.onTap,
-    this.isReadOnly,
-    this.style,
-    this.prefIcon,
-    this.fillColor,
-    this.focusNode,
-    this.labelText,
-    this.minLine,
-    this.maxLine,
-    this.errortext,
-    this.enabledBorder,
-    this.focusedBorder,
-  }) : super(key: key);
+  const CustomTextFieldNew(
+      {Key? key,
+      this.textFieldTap,
+      this.onEditingComplete,
+      this.hint,
+      this.control,
+      this.hintStyle,
+      required this.isRequired,
+      this.contentPadding,
+      required this.keyboardType,
+      this.type,
+      this.maxLength,
+      required this.isNumber,
+      this.onChanged,
+      required this.textInputAction,
+      this.icon,
+      this.onTap,
+      this.isReadOnly,
+      this.singleInput = false,
+      this.style,
+      this.prefIcon,
+      this.fillColor,
+      this.focusNode,
+      this.labelText,
+      this.minLine,
+      this.maxLine,
+      this.errortext,
+      this.enabledBorder,
+      this.focusedBorder,
+      this.textAlign})
+      : super(key: key);
 
   @override
   State<CustomTextFieldNew> createState() => _CustomTextFieldState();
@@ -78,6 +82,7 @@ class _CustomTextFieldState extends State<CustomTextFieldNew> {
         focusNode: widget.focusNode,
         keyboardType: widget.keyboardType,
         onTap: widget.textFieldTap,
+        textAlign: widget.textAlign ?? TextAlign.start,
         validator: (value) {
           if (widget.isRequired) {
             switch (widget.type) {
@@ -101,10 +106,15 @@ class _CustomTextFieldState extends State<CustomTextFieldNew> {
           }
         },
         inputFormatters: widget.isNumber
-            ? [
-                FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                LengthLimitingTextInputFormatter(10)
-              ]
+            ? widget.singleInput
+                ? [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    LengthLimitingTextInputFormatter(1)
+                  ]
+                : [
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    LengthLimitingTextInputFormatter(10)
+                  ]
             : widget.type == "username"
                 ? [
                     FilteringTextInputFormatter.deny(RegExp(r'\s')),

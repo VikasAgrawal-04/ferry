@@ -54,4 +54,16 @@ class AuthServices {
       return Left(ServerFailure(message: error.message.toString()));
     }
   }
+
+  Future<Either<Failure, Map<String, dynamic>>> resendOtp(
+      {required String number}) async {
+    try {
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.resendOtp,
+          queryParams: {"mobile": number, "usertype": "N"});
+      return Right(response!);
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
 }

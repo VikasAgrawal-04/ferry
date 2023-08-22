@@ -2,6 +2,7 @@ import 'package:get/route_manager.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/middlewares/global_middleware.dart';
 import 'package:goa/src/views/screens/auth_screen/login.dart';
+import 'package:goa/src/views/screens/auth_screen/otp_screen.dart';
 import 'package:goa/src/views/screens/dashboard.dart';
 import 'package:goa/src/views/screens/passes_screen/pass_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
@@ -20,6 +21,7 @@ class AppRouter {
     GetPage(
         name: AppRoutes.routeListing, page: () => const RouteListingScreen()),
     GetPage(name: AppRoutes.vehicleListing, page: () => const VehicleScreen()),
-    GetPage(name: AppRoutes.passDetails, page: () => const PassScreen())
+    GetPage(name: AppRoutes.passDetails, page: () => const PassScreen()),
+    GetPage(name: AppRoutes.otp, page: () => const OtpScreeen())
   ];
 }

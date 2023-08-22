@@ -168,15 +168,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<bool> api() async {
+  Future<void> api() async {
     if (_formKey.currentState!.validate()) {
       EasyLoading.show();
-      final result = await authController.login(
+      await authController.login(
           number: phoneController.text, password: passwordController.text);
-      Get.offAndToNamed(AppRoutes.dashboard);
-      return result;
-    } else {
-      return false;
     }
   }
 }
