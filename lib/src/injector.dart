@@ -18,6 +18,6 @@ class DependencyInjector {
   static void _injectControllers() {
     final dio = Get.find<Dio>();
     Get.put(AuthController(dio: dio));
-    Get.lazyPut(() => RouteController(dio: dio));
+    Get.put(RouteController(dio: dio));
   }
 }

@@ -25,7 +25,12 @@ class _PassScreenState extends State<PassScreen> {
             children: List.generate(routeController.passes.length, (index) {
               final data = routeController.passes[index];
               final img = routeController.passesImg[index];
-              return pass(name: data.passname, img: img, onTap: () {});
+              return pass(
+                  name: data.passname,
+                  img: img,
+                  onTap: () async {
+                    await routeController.createPass(passId: data.passid);
+                  });
             }),
           ),
         ),

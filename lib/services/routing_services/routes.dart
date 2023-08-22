@@ -6,4 +6,5 @@ class AppRoutes {
   static const String routeListing = '/route-listing';
   static const String vehicleListing = '/vehicle-listing';
   static const String passDetails = '/pass-details';
+  static const String yourPass = '/your-pass';
 }

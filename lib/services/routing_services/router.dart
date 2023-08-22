@@ -9,6 +9,7 @@ import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
 import 'package:goa/src/views/screens/passes_screen/vehicle_screen.dart';
 
 import '../../src/views/screens/auth_screen/register.dart';
+import '../../src/views/screens/your_pass_screen/your_pass_screen.dart';
 
 class AppRouter {
   static List<GetPage> routes = [
@@ -18,10 +19,11 @@ class AppRouter {
         middlewares: [AuthMiddleware()]),
     GetPage(name: AppRoutes.login, page: () => const LoginScreen()),
     GetPage(name: AppRoutes.register, page: () => const RegisterScreen()),
+    GetPage(name: AppRoutes.otp, page: () => const OtpScreeen()),
     GetPage(
         name: AppRoutes.routeListing, page: () => const RouteListingScreen()),
     GetPage(name: AppRoutes.vehicleListing, page: () => const VehicleScreen()),
     GetPage(name: AppRoutes.passDetails, page: () => const PassScreen()),
-    GetPage(name: AppRoutes.otp, page: () => const OtpScreeen())
+    GetPage(name: AppRoutes.yourPass, page: () => const YourPassScreen())
   ];
 }

@@ -14,4 +14,6 @@ class EndPoints {
   static const String getRoutes = 'get_routes_name.php';
   static const String getRouteImg = 'get_route_image.php';
   static const String getPassByRoute = 'get_pass_by_route.php';
+  static const String createPass = 'create_pass_sale.php';
+  static const String currentPass = 'get_current_passes.php';
 }

@@ -1,11 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:goa/src/core/utils/constants/api_endpoints.dart';
+import 'package:goa/src/core/utils/constants/keys.dart';
 import 'package:goa/src/core/utils/errors/failures.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
 import 'package:goa/src/models/routes/routes_info_model.dart';
 
 import '../../src/models/routes/route_passes.dart';
+import '../../src/models/your_pass/your_passes_model.dart';
 
 class RouteService {
   final Dio dio;
@@ -29,6 +31,39 @@ class RouteService {
           dio, RequestType.post, EndPoints.getPassByRoute,
           queryParams: {"routeid": routeId, "vehicletype": vehicleType});
       return Right(RoutePasses.fromJson(response!));
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
+
+  Future<Either<Failure, Map<String, dynamic>>> createPass(
+      {required int passId}) async {
+    try {
+      final userId = Helpers.getString(key: Keys.userId);
+      final deviceId = Helpers.getString(key: Keys.deviceId);
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.createPass,
+          queryParams: {
+            "userid": userId,
+            "passid": passId,
+            "payment_mode": "C",
+            "payment_reference": "XYZ123",
+            "currentdeviceid": deviceId
+          });
+      return Right(response!);
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
+
+  Future<Either<Failure, YourPassesModel>> getYourPasses() async {
+    try {
+      final userId = Helpers.getString(key: Keys.userId);
+      final deviceId = Helpers.getString(key: Keys.deviceId);
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.currentPass,
+          queryParams: {"currentuserid": userId, "currentdeviceid": deviceId});
+      return Right(YourPassesModel.fromJson(response!));
     } on ServerFailure catch (error) {
       return Left(ServerFailure(message: error.message.toString()));
     }

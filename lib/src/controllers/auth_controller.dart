@@ -19,11 +19,14 @@ class AuthController extends GetxController {
     bool success = true;
     final successOrFailure =
         await _services.login(number: number, password: password);
-    successOrFailure.fold((l) => debugPrint("Failure In Login $l"), (r) {
+    successOrFailure.fold((l) => debugPrint("Failure In Login $l"), (r) async {
       if (r.success) {
         if (r.data?.isotpverified == "1") {
           EasyLoading.showSuccess(r.message);
-          Helpers.setString(key: Keys.userData, value: jsonEncode(r.data));
+          await Helpers.setString(
+              key: Keys.userData, value: jsonEncode(r.data));
+          await Helpers.setString(
+              key: Keys.userId, value: r.data!.userid.toString());
           Get.offAndToNamed(AppRoutes.dashboard);
         } else {
           EasyLoading.showInfo("Please Complete OTP Verification");

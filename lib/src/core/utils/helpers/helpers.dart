@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -196,8 +197,8 @@ class Helpers {
     return "Unknown error occured";
   }
 
-  static setString({required String key, required String value}) {
-    prefs?.setString(key, value);
+  static setString({required String key, required String value}) async {
+    await prefs?.setString(key, value);
   }
 
   static deleteString({required key}) {
@@ -206,6 +207,10 @@ class Helpers {
 
   static String? getString({required String key}) {
     return prefs?.getString(key);
+  }
+
+  static Image imgFromBase64(String base64) {
+    return Image.memory(base64Decode(base64));
   }
 }
 

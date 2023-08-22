@@ -1,14 +1,18 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/auth_controller.dart';
+import 'package:goa/src/core/utils/constants/keys.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../../../core/utils/helpers/helpers.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,8 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final authController = Get.find<AuthController>();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   final _formKey = GlobalKey<FormState>();
   late TargetPlatform? platform;
+  final RxString deviceLocalId = ''.obs;
 
   @override
   void initState() {
@@ -33,6 +39,15 @@ class _LoginScreenState extends State<LoginScreen> {
       platform = TargetPlatform.iOS;
     }
     _checkPermission();
+    fetchDeviceInfo();
+  }
+
+  Future<void> fetchDeviceInfo() async {
+    if (Platform.isAndroid) {
+      final deviceInformation = await deviceInfo.deviceInfo;
+      deviceLocalId.value = deviceInformation.data['id'];
+      await Helpers.setString(key: Keys.deviceId, value: deviceLocalId.value);
+    } else if (Platform.isIOS) {}
   }
 
   Future<bool> _checkPermission() async {
