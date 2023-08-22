@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/route_controller.dart';
 import 'package:goa/src/core/utils/constants/colors.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
@@ -55,6 +56,9 @@ class _YourPassScreenState extends State<YourPassScreen> {
           Center(
             child: CustomButtonNew(
               height: 5.5.h,
+              onTap: () {
+                Get.toNamed(AppRoutes.routeListing);
+              },
               margin: EdgeInsets.symmetric(horizontal: 8.w),
               color: AppColors.greenBg,
               text: 'Buy Passes!',
