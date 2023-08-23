@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/general_controller.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -14,6 +15,15 @@ class InfoScreen extends StatefulWidget {
 
 class _InfoScreenState extends State<InfoScreen> {
   final generalController = Get.find<GeneralController>();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await api();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
@@ -29,8 +39,9 @@ class _InfoScreenState extends State<InfoScreen> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () async {
-                    await api("help");
+                  onTap: () {
+                    Get.toNamed(AppRoutes.infoDetails,
+                        arguments: generalController.appInfo.last);
                   },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
@@ -46,8 +57,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                   color: Colors.white)))),
                 ),
                 InkWell(
-                  onTap: () async {
-                    await api("faq");
+                  onTap: () {
+                    Get.toNamed(AppRoutes.infoDetails,
+                        arguments: generalController.appInfo.first);
                   },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
@@ -63,8 +75,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                   color: Colors.white)))),
                 ),
                 InkWell(
-                  onTap: () async {
-                    await api("terms");
+                  onTap: () {
+                    Get.toNamed(AppRoutes.infoDetails,
+                        arguments: generalController.appInfo[2]);
                   },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
@@ -80,8 +93,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                   color: Colors.white)))),
                 ),
                 InkWell(
-                  onTap: () async {
-                    await api("privacy");
+                  onTap: () {
+                    Get.toNamed(AppRoutes.infoDetails,
+                        arguments: generalController.appInfo[1]);
                   },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
@@ -104,8 +118,8 @@ class _InfoScreenState extends State<InfoScreen> {
     );
   }
 
-  Future<bool> api(String title) async {
-    final result = await generalController.getAppInfo(title);
+  Future<bool> api() async {
+    final result = await generalController.getAppInfo();
     return result;
   }
 }

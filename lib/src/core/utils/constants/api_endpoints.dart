@@ -18,5 +18,5 @@ class EndPoints {
   static const String currentPass = 'get_current_passes.php';
 
   //General
-  static const String appInfo = 'get_app_information.php';
+  static const String appInfo = 'get_all_app_information.php';
 }

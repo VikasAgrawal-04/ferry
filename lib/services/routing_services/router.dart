@@ -4,6 +4,7 @@ import 'package:goa/src/middlewares/global_middleware.dart';
 import 'package:goa/src/views/screens/auth_screen/login.dart';
 import 'package:goa/src/views/screens/auth_screen/otp_screen.dart';
 import 'package:goa/src/views/screens/dashboard.dart';
+import 'package:goa/src/views/screens/info_screen/info_detail_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/pass_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
 import 'package:goa/src/views/screens/passes_screen/vehicle_screen.dart';
@@ -24,6 +25,7 @@ class AppRouter {
         name: AppRoutes.routeListing, page: () => const RouteListingScreen()),
     GetPage(name: AppRoutes.vehicleListing, page: () => const VehicleScreen()),
     GetPage(name: AppRoutes.passDetails, page: () => const PassScreen()),
-    GetPage(name: AppRoutes.yourPass, page: () => const YourPassScreen())
+    GetPage(name: AppRoutes.yourPass, page: () => const YourPassScreen()),
+    GetPage(name: AppRoutes.infoDetails, page: () => const InfoDetailScreen()),
   ];
 }

@@ -4,16 +4,18 @@ import 'package:goa/src/core/utils/constants/api_endpoints.dart';
 import 'package:goa/src/core/utils/errors/failures.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
 
+import '../../src/models/info/app_info_model.dart';
+
 class GeneralService {
   final Dio dio;
   GeneralService(this.dio);
 
-  Future<Either<Failure, Map<String, dynamic>>> getAppInfo(String title) async {
+  Future<Either<Failure, AppInfoModel>> getAppInfo() async {
     try {
       final response = await Helpers.sendRequest(
           dio, RequestType.post, EndPoints.appInfo,
-          queryParams: {"title": title});
-      return Right(response!);
+          queryParams: {});
+      return Right(AppInfoModel.fromJson(response!));
     } on ServerFailure catch (error) {
       return Left(ServerFailure(message: error.message.toString()));
     }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/src/core/utils/constants/colors.dart';
-import 'package:goa/src/views/screens/cart_screen/cart_screen.dart';
 import 'package:goa/src/views/screens/history_screen/pass_history_screen.dart';
 import 'package:goa/src/views/screens/info_screen/info_screen.dart';
+import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
 import 'package:goa/src/views/screens/settings_screen/setting_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -33,10 +33,9 @@ class _DashBoardState extends State<DashBoard> {
     Icons.info_outlined,
   ];
   final List<Widget> pages = [
-    CartScreen(),
+    RouteListingScreen(),
     PassHistoryScreen(),
     YourPassScreen(),
-    // RouteListingScreen(),
     SettingScreen(),
     InfoScreen()
   ];

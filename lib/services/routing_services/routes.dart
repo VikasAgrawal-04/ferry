@@ -7,4 +7,5 @@ class AppRoutes {
   static const String vehicleListing = '/vehicle-listing';
   static const String passDetails = '/pass-details';
   static const String yourPass = '/your-pass';
+  static const String infoDetails = '/info-details';
 }
