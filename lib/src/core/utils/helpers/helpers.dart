@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:goa/src/core/utils/errors/exception.dart';
 import 'package:goa/src/core/utils/errors/failures.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -211,6 +212,11 @@ class Helpers {
 
   static Image imgFromBase64(String base64) {
     return Image.memory(base64Decode(base64));
+  }
+
+  static String formattedDate(DateTime date) {
+    final formattedDate = DateFormat('dd MMM yyyy').format(date);
+    return formattedDate;
   }
 }
 

@@ -62,7 +62,7 @@ class RouteController extends GetxController {
     successOrFailure.fold((l) => debugPrint("Error In Create Pass $l"), (r) {
       if (r['success']) {
         EasyLoading.showSuccess(r['message']);
-        Get.toNamed(AppRoutes.yourPass);
+        Get.offAllNamed(AppRoutes.dashboard);
       } else {
         EasyLoading.showError(r['message']);
       }
@@ -72,10 +72,10 @@ class RouteController extends GetxController {
 
   Future<void> getYourPasses() async {
     EasyLoading.show();
+    yourPasses.clear();
     final successOrFailure = await _service.getYourPasses();
     successOrFailure.fold((l) => debugPrint("Error In Get Your Passes $l"),
         (r) {
-      yourPasses.clear();
       if (r.success) {
         yourPasses.addAll(r.data);
       }

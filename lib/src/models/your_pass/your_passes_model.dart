@@ -54,26 +54,27 @@ class YourPassDatum {
   String isUnderTransfer;
   String passcode;
   String routename;
+  String routeImg;
 
-  YourPassDatum({
-    required this.id,
-    required this.passid,
-    required this.routeid,
-    required this.userid,
-    required this.buyDate,
-    required this.buyTime,
-    required this.cost,
-    required this.validTillDate,
-    required this.paymentMode,
-    required this.paymentReference,
-    required this.isActive,
-    required this.isDeleted,
-    required this.currentuserid,
-    required this.currentdeviceid,
-    required this.isUnderTransfer,
-    required this.passcode,
-    required this.routename,
-  });
+  YourPassDatum(
+      {required this.id,
+      required this.passid,
+      required this.routeid,
+      required this.userid,
+      required this.buyDate,
+      required this.buyTime,
+      required this.cost,
+      required this.validTillDate,
+      required this.paymentMode,
+      required this.paymentReference,
+      required this.isActive,
+      required this.isDeleted,
+      required this.currentuserid,
+      required this.currentdeviceid,
+      required this.isUnderTransfer,
+      required this.passcode,
+      required this.routename,
+      required this.routeImg});
 
   factory YourPassDatum.fromJson(Map<String, dynamic> json) => YourPassDatum(
         id: json["id"],
@@ -93,6 +94,7 @@ class YourPassDatum {
         isUnderTransfer: json["is_under_transfer"],
         passcode: json["passcode"],
         routename: json["routename"],
+        routeImg: json["routeimg"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -115,5 +117,6 @@ class YourPassDatum {
         "is_under_transfer": isUnderTransfer,
         "passcode": passcode,
         "routename": routename,
+        "routeimg": routeImg
       };
 }

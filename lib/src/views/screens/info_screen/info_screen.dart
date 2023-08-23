@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:goa/src/controllers/general_controller.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../core/utils/constants/colors.dart';
 
-class InfoScreen extends StatelessWidget {
+class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key});
 
+  @override
+  State<InfoScreen> createState() => _InfoScreenState();
+}
+
+class _InfoScreenState extends State<InfoScreen> {
+  final generalController = Get.find<GeneralController>();
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
@@ -21,7 +29,9 @@ class InfoScreen extends StatelessWidget {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    await api("help");
+                  },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
                       color: AppColors.greenBg,
@@ -36,7 +46,9 @@ class InfoScreen extends StatelessWidget {
                                   color: Colors.white)))),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    await api("faq");
+                  },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
                       color: AppColors.greenBg,
@@ -51,7 +63,9 @@ class InfoScreen extends StatelessWidget {
                                   color: Colors.white)))),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    await api("terms");
+                  },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
                       color: AppColors.greenBg,
@@ -66,7 +80,9 @@ class InfoScreen extends StatelessWidget {
                                   color: Colors.white)))),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    await api("privacy");
+                  },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
                       color: AppColors.greenBg,
@@ -86,5 +102,10 @@ class InfoScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<bool> api(String title) async {
+    final result = await generalController.getAppInfo(title);
+    return result;
   }
 }
