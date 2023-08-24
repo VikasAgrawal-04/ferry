@@ -126,7 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.toNamed(AppRoutes.sendOtp);
+                              },
                               style: ButtonStyle(
                                 overlayColor: MaterialStateColor.resolveWith(
                                     (states) => Colors.transparent),

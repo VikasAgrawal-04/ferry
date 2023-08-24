@@ -16,6 +16,7 @@ class _OtpScreeenState extends State<OtpScreeen> {
   late List<FocusNode> _focusNodes;
   late List<TextEditingController> _controllers;
   String number = Get.arguments;
+  final param = Get.parameters;
   final authController = Get.find<AuthController>();
 
   @override
@@ -78,23 +79,27 @@ class _OtpScreeenState extends State<OtpScreeen> {
                 onTap: () async {
                   final otp = _controllers.fold('',
                       (previousValue, element) => previousValue + element.text);
-                  await authController.verfiyOtp(number: number, otp: otp);
+                  await authController.verfiyOtp(
+                      number: number,
+                      otp: otp,
+                      forgot: param.values.isNotEmpty);
                 },
                 margin: EdgeInsets.symmetric(horizontal: 6.w)),
             TextButton(
-                onPressed: () async {
-                  _controllers.map((e) => e.clear());
-                  await authController.resendOtp(number: number);
-                },
-                style: ButtonStyle(
-                  overlayColor: MaterialStateColor.resolveWith(
-                      (states) => Colors.transparent),
-                ),
-                child: Text(
-                  "Didn't received OTP?\n Resend OTP.",
-                  style: theme.titleSmall,
-                  textAlign: TextAlign.center,
-                )),
+              onPressed: () async {
+                _controllers.map((e) => e.clear());
+                await authController.resendOtp(number: number);
+              },
+              style: ButtonStyle(
+                overlayColor: MaterialStateColor.resolveWith(
+                    (states) => Colors.transparent),
+              ),
+              child: Text(
+                "Didn't received OTP?\n Resend OTP.",
+                style: theme.titleSmall,
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       ),

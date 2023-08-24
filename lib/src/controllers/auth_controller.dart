@@ -62,7 +62,10 @@ class AuthController extends GetxController {
     return success;
   }
 
-  Future<bool> verfiyOtp({required String number, required String otp}) async {
+  Future<bool> verfiyOtp(
+      {required String number,
+      required String otp,
+      bool forgot = false}) async {
     EasyLoading.show();
     bool success = true;
     final successOrFailure =
@@ -71,7 +74,11 @@ class AuthController extends GetxController {
       if (r['success']) {
         success = true;
         EasyLoading.showSuccess(r['message']);
-        Get.offAllNamed(AppRoutes.login);
+        if (forgot == false) {
+          Get.offAllNamed(AppRoutes.login);
+        } else {
+          Get.toNamed(AppRoutes.newPass, arguments: number);
+        }
       } else {
         success = false;
         EasyLoading.showError(r['message']);
@@ -81,11 +88,28 @@ class AuthController extends GetxController {
     return success;
   }
 
-  Future<void> resendOtp({required String number}) async {
+  Future<bool> resendOtp({required String number}) async {
+    bool success = false;
     final failureOrSuccess = await _services.resendOtp(number: number);
     failureOrSuccess.fold((l) => debugPrint("Failure In Login $l"), (r) {
       if (r['success']) {
+        success = true;
         EasyLoading.showSuccess(r['message']);
+      } else {
+        EasyLoading.showError(r['message']);
+      }
+    });
+    return success;
+  }
+
+  Future<void> changePassword(
+      {required String oldPass, required String newPass}) async {
+    final failureOrSuccess =
+        await _services.changePassword(oldPass: oldPass, newPass: newPass);
+    failureOrSuccess.fold((l) => debugPrint("Failure In Login $l"), (r) {
+      if (r['success']) {
+        EasyLoading.showSuccess(r['message']);
+        Get.back();
       } else {
         EasyLoading.showError(r['message']);
       }

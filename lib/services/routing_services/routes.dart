@@ -8,4 +8,10 @@ class AppRoutes {
   static const String passDetails = '/pass-details';
   static const String yourPass = '/your-pass';
   static const String infoDetails = '/info-details';
+  static const String sendOtp = '/send-otp';
+  static const String newPass = '/new-pass';
+  static const String changeInPass = '/change-in-pass';
+  static const String transferPass = '/transfer-pass';
+  static const String importPass = '/import-pass';
+  static const String contactUs = '/contact-us';
 }

@@ -20,6 +20,7 @@ class _InfoScreenState extends State<InfoScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await api();
+      await generalController.getContactInfo();
     });
     super.initState();
   }
@@ -58,8 +59,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.toNamed(AppRoutes.infoDetails,
-                        arguments: generalController.appInfo.first);
+                    Get.toNamed(AppRoutes.contactUs);
                   },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),

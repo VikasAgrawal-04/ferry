@@ -25,7 +25,9 @@ class SettingScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(AppRoutes.changeInPass);
+                      },
                       child: Card(
                           margin: EdgeInsets.only(bottom: 1.5.h),
                           color: AppColors.greenBg,
@@ -40,7 +42,9 @@ class SettingScreen extends StatelessWidget {
                                       color: Colors.white)))),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(AppRoutes.transferPass);
+                      },
                       child: Card(
                           margin: EdgeInsets.only(bottom: 1.5.h),
                           color: AppColors.greenBg,
@@ -55,7 +59,9 @@ class SettingScreen extends StatelessWidget {
                                       color: Colors.white)))),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(AppRoutes.importPass);
+                      },
                       child: Card(
                           margin: EdgeInsets.only(bottom: 1.5.h),
                           color: AppColors.greenBg,

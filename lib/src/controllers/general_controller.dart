@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:goa/services/api_services/general_service.dart';
 
 import '../models/info/app_info_model.dart';
+import '../models/info/contact_info.dart';
 
 class GeneralController extends GetxController {
   final Dio dio;
@@ -13,6 +14,7 @@ class GeneralController extends GetxController {
 
   //List Of App Information
   final appInfo = <AppInfoDatum>[].obs;
+  final contactInfo = <ContactInfo>[].obs;
 
   Future<bool> getAppInfo() async {
     bool rtype = false;
@@ -25,5 +27,15 @@ class GeneralController extends GetxController {
       }
     });
     return rtype;
+  }
+
+  Future<void> getContactInfo() async {
+    final failureOrSuccess = await _service.getContactInfo();
+    failureOrSuccess.fold((l) => debugPrint("Failure In GetContactInfo"), (r) {
+      if (r.success) {
+        contactInfo.clear();
+        contactInfo.addAll(r.data);
+      }
+    });
   }
 }

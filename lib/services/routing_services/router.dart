@@ -1,13 +1,19 @@
 import 'package:get/route_manager.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/middlewares/global_middleware.dart';
+import 'package:goa/src/views/screens/auth_screen/forgot_password/new_pass_screen.dart';
+import 'package:goa/src/views/screens/auth_screen/forgot_password/sent_otp_screen.dart';
 import 'package:goa/src/views/screens/auth_screen/login.dart';
 import 'package:goa/src/views/screens/auth_screen/otp_screen.dart';
 import 'package:goa/src/views/screens/dashboard.dart';
+import 'package:goa/src/views/screens/info_screen/contact_us.dart';
 import 'package:goa/src/views/screens/info_screen/info_detail_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/pass_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
 import 'package:goa/src/views/screens/passes_screen/vehicle_screen.dart';
+import 'package:goa/src/views/screens/settings_screen/change_inside_password.dart';
+import 'package:goa/src/views/screens/settings_screen/import_pass.dart';
+import 'package:goa/src/views/screens/settings_screen/transfer_pass.dart';
 
 import '../../src/views/screens/auth_screen/register.dart';
 import '../../src/views/screens/your_pass_screen/your_pass_screen.dart';
@@ -27,5 +33,11 @@ class AppRouter {
     GetPage(name: AppRoutes.passDetails, page: () => const PassScreen()),
     GetPage(name: AppRoutes.yourPass, page: () => const YourPassScreen()),
     GetPage(name: AppRoutes.infoDetails, page: () => const InfoDetailScreen()),
+    GetPage(name: AppRoutes.sendOtp, page: () => const SendOtpScreen()),
+    GetPage(name: AppRoutes.newPass, page: () => const NewPassScreen()),
+    GetPage(name: AppRoutes.changeInPass, page: () => const ChangeInsidePass()),
+    GetPage(name: AppRoutes.transferPass, page: () => const TransferPass()),
+    GetPage(name: AppRoutes.importPass, page: () => const ImportPass()),
+    GetPage(name: AppRoutes.contactUs, page: () => const ContactUs())
   ];
 }

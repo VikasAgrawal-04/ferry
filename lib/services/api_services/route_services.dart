@@ -68,4 +68,38 @@ class RouteService {
       return Left(ServerFailure(message: error.message.toString()));
     }
   }
+
+  Future<Either<Failure, Map<String, dynamic>>> transferPass(
+      {required String passCode}) async {
+    try {
+      final userId = Helpers.getString(key: Keys.userId);
+      final deviceId = Helpers.getString(key: Keys.deviceId);
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.transferPass, queryParams: {
+        "passcode": passCode,
+        "currentdeviceid": deviceId,
+        "currentuserid": userId
+      });
+      return Right(response!);
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
+
+  Future<Either<Failure, Map<String, dynamic>>> importPass(
+      {required String transferCode}) async {
+    try {
+      final userId = Helpers.getString(key: Keys.userId);
+      final deviceId = Helpers.getString(key: Keys.deviceId);
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.importPass, queryParams: {
+        "transfercode": transferCode,
+        "deviceid": deviceId,
+        "userid": userId
+      });
+      return Right(response!);
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
 }

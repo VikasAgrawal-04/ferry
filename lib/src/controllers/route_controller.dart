@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/api_services/route_services.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/models/routes/routes_info_model.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 import '../models/routes/route_passes.dart';
 import '../models/your_pass/your_passes_model.dart';
@@ -81,5 +83,48 @@ class RouteController extends GetxController {
       }
     });
     EasyLoading.dismiss();
+  }
+
+  Future<void> transferPass({required String passCode}) async {
+    EasyLoading.show();
+    final successOrFailure = await _service.transferPass(passCode: passCode);
+    EasyLoading.dismiss();
+    successOrFailure.fold((l) => debugPrint("Error In Transfer Pass $l"),
+        (r) async {
+      if (r['success']) {
+        Get.defaultDialog(
+            title: "${r['message']} \n Transfer Code: ${r['transfercode']}",
+            content: SizedBox(
+              height: 10.h,
+              child: SfBarcodeGenerator(
+                showValue: true,
+                value: r['transfercode'],
+                symbology: Code128A(module: 2),
+              ),
+            ),
+            textConfirm: 'Ok',
+            onConfirm: () {
+              Get.offAllNamed(AppRoutes.dashboard);
+            });
+      } else {
+        EasyLoading.showError(r['message']);
+      }
+    });
+  }
+
+  Future<void> importPass({required String transferCode}) async {
+    EasyLoading.show();
+    final successOrFailure =
+        await _service.importPass(transferCode: transferCode);
+    EasyLoading.dismiss();
+    successOrFailure.fold((l) => debugPrint("Error In Import Pass $l"),
+        (r) async {
+      if (r['success']) {
+        EasyLoading.showSuccess(r['message']);
+        Get.back();
+      } else {
+        EasyLoading.showError(r['message']);
+      }
+    });
   }
 }

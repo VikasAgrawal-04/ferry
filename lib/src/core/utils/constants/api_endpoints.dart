@@ -9,6 +9,9 @@ class EndPoints {
   static const String verifyOtp = "verifyotp.php";
   static const String resendOtp = "resend_otp.php";
   static const String changePassword = "changepassword.php";
+  static const String createNewPassword = 'sp_cp.php';
+  static const String transferPass = "start_transfer.php";
+  static const String importPass = "import_pass_transfer.php";
 
   //Routes
   static const String getRoutes = 'get_routes_name.php';
@@ -19,4 +22,5 @@ class EndPoints {
 
   //General
   static const String appInfo = 'get_all_app_information.php';
+  static const String contactInfo = 'get_contact_info.php';
 }

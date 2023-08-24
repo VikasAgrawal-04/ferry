@@ -218,6 +218,11 @@ class Helpers {
     final formattedDate = DateFormat('dd MMM yyyy').format(date);
     return formattedDate;
   }
+
+  static String formatTimeDate(DateTime date) {
+    final formattedDate = DateFormat('dd MMM yyyy HH:mm:ss').format(date);
+    return formattedDate;
+  }
 }
 
 class NumberInputFormat extends TextInputFormatter {
