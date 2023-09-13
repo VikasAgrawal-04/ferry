@@ -18,7 +18,21 @@ class SettingScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 5.h),
-              Image.asset('assets/images/main1.PNG'),
+              SizedBox(
+                  height: 40.h,
+                  child: Image.asset(
+                    'assets/images/main1.PNG',
+                    frameBuilder:
+                        (context, child, frame, wasSynchronouslyLoaded) {
+                      if (wasSynchronouslyLoaded) return child;
+                      return AnimatedOpacity(
+                        opacity: frame == null ? 0 : 1,
+                        duration: const Duration(seconds: 2),
+                        curve: Curves.easeOut,
+                        child: child,
+                      );
+                    },
+                  )),
               Text("SETTINGS", style: theme.displayLarge),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -80,7 +94,7 @@ class SettingScreen extends StatelessWidget {
                         SharedPreferences sharedPreferences =
                             await SharedPreferences.getInstance();
                         sharedPreferences.clear();
-                        Get.toNamed(AppRoutes.login);
+                        Get.offAllNamed(AppRoutes.login);
                       },
                       child: Card(
                           margin: EdgeInsets.only(bottom: 1.5.h),

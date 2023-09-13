@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:goa/src/core/utils/constants/api_endpoints.dart';
-import 'package:goa/src/core/utils/errors/failures.dart';
+import 'package:goa/src/core/errors/failures.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
 import 'package:goa/src/models/auth/response/login_response.dart';
 

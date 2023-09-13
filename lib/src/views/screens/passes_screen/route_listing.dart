@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/routing_services/routes.dart';
-import 'package:goa/src/controllers/route_controller.dart';
+import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../core/utils/constants/colors.dart';
+import '../../../models/routes/routes_info_model.dart';
 
 class RouteListingScreen extends StatefulWidget {
   const RouteListingScreen({super.key});
@@ -18,19 +19,37 @@ class RouteListingScreen extends StatefulWidget {
 class _RouteListingScreenState extends State<RouteListingScreen> {
   final searchController = TextEditingController();
   final routeController = Get.find<RouteController>();
+  final filteredList = <RouteDatum>[].obs;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await routeController.fetchRoutes();
+      if (routeController.routesName.isNotEmpty) {
+        filteredList.addAll(routeController.routesName);
+      }
     });
     super.initState();
+  }
+
+  void filterList(String query) {
+    if (query.isEmpty) {
+      filteredList.clear();
+      filteredList.addAll(routeController.routesName);
+    } else {
+      filteredList.clear();
+      for (var item in routeController.routesName) {
+        if (item.routename.toLowerCase().contains(query.toLowerCase())) {
+          print(item.routename);
+          print(query);
+          filteredList.add(item);
+        }
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
-    final controller = Get.find<RouteController>();
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(100.w, 12.5.h),
@@ -43,6 +62,9 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
                 EdgeInsets.only(top: 10.h, left: 4.w, right: 4.w, bottom: 1.h),
             child: CustomTextFieldNew(
                 control: searchController,
+                onChanged: (value) {
+                  filterList(value);
+                },
                 isRequired: false,
                 icon: Icons.search,
                 hint: 'Search',
@@ -54,10 +76,10 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
       ),
       body: Obx(
         () => ListView.builder(
-            itemCount: controller.routesName.length,
+            itemCount: filteredList.length,
             padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
             itemBuilder: (context, index) {
-              final data = controller.routesName[index];
+              final data = filteredList[index];
               return InkWell(
                 splashColor: Colors.transparent,
                 onTap: () {

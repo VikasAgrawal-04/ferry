@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:goa/src/controllers/auth_controller.dart';
-import 'package:goa/src/controllers/general_controller.dart';
-import 'package:goa/src/controllers/route_controller.dart';
+import 'package:goa/src/controllers/api_controller/auth_controller.dart';
+import 'package:goa/src/controllers/api_controller/general_controller.dart';
+import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:goa/src/core/utils/constants/api_endpoints.dart';
 
 class DependencyInjector {

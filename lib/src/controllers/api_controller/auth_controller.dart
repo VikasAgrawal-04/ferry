@@ -8,7 +8,7 @@ import 'package:goa/services/api_services/auth_services.dart';
 import 'package:goa/src/core/utils/constants/keys.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
 
-import '../../services/routing_services/routes.dart';
+import '../../../services/routing_services/routes.dart';
 
 class AuthController extends GetxController {
   final Dio dio;
@@ -110,6 +110,21 @@ class AuthController extends GetxController {
       if (r['success']) {
         EasyLoading.showSuccess(r['message']);
         Get.back();
+      } else {
+        EasyLoading.showError(r['message']);
+      }
+    });
+  }
+
+  Future<void> createNewPassword(
+      {required String mobile, required String pass}) async {
+    final failureOrSuccess =
+        await _services.createNewPassword(mobile: mobile, pass: pass);
+    failureOrSuccess.fold((l) => debugPrint("Failure In Create Password $l"),
+        (r) {
+      if (r['success']) {
+        EasyLoading.showSuccess(r['message']);
+        Get.offAllNamed(AppRoutes.login);
       } else {
         EasyLoading.showError(r['message']);
       }

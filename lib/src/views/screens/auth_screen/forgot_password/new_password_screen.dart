@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../../controllers/auth_controller.dart';
+import '../../../../controllers/api_controller/auth_controller.dart';
 import '../../../widgets/button/custom_button.dart';
 import '../../../widgets/textfield/custom_text_field.dart';
 
@@ -20,7 +21,7 @@ class _NewPassScreenState extends State<NewPassScreen> {
   final authController = Get.find<AuthController>();
   FocusNode _focusNode1 = FocusNode();
   FocusNode _focusNode2 = FocusNode();
-  final phone = Get.arguments();
+  final phone = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +80,9 @@ class _NewPassScreenState extends State<NewPassScreen> {
                       SizedBox(height: 2.h),
                       CustomButtonNew(
                         text: 'Submit',
-                        onTap: () async {},
+                        onTap: () async {
+                          await api();
+                        },
                         height: 5.5.h,
                         borderRadius: 20,
                       ),
@@ -90,5 +93,16 @@ class _NewPassScreenState extends State<NewPassScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> api() async {
+    if (_formKey.currentState!.validate()) {
+      if (confirmPasswordController.text == passwordController.text) {
+        await authController.createNewPassword(
+            mobile: phone, pass: passwordController.text);
+      } else {
+        EasyLoading.showError("Passwords do not match");
+      }
+    }
   }
 }

@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:goa/src/core/utils/errors/exception.dart';
-import 'package:goa/src/core/utils/errors/failures.dart';
+import 'package:goa/src/core/errors/exception.dart';
+import 'package:goa/src/core/errors/failures.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -211,7 +211,18 @@ class Helpers {
   }
 
   static Image imgFromBase64(String base64) {
-    return Image.memory(base64Decode(base64));
+    return Image.memory(
+      base64Decode(base64),
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (wasSynchronouslyLoaded) return child;
+        return AnimatedOpacity(
+          opacity: frame == null ? 0 : 1,
+          duration: const Duration(seconds: 2),
+          curve: Curves.easeOut,
+          child: child,
+        );
+      },
+    );
   }
 
   static String formattedDate(DateTime date) {

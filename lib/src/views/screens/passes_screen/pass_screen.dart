@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:goa/src/controllers/route_controller.dart';
+import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PassScreen extends StatefulWidget {
@@ -54,7 +54,21 @@ class _PassScreenState extends State<PassScreen> {
         padding: EdgeInsets.all(.5.h),
         child: Column(
           children: [
-            Image.asset(img),
+            SizedBox(
+              height: 40.h,
+              child: Image.asset(
+                img,
+                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                  if (wasSynchronouslyLoaded) return child;
+                  return AnimatedOpacity(
+                    opacity: frame == null ? 0 : 1,
+                    duration: const Duration(seconds: 2),
+                    curve: Curves.easeOut,
+                    child: child,
+                  );
+                },
+              ),
+            ),
             SizedBox(height: 1.h),
             Text(name, textAlign: TextAlign.center)
           ],

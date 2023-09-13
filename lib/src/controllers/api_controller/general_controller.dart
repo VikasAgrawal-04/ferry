@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/api_services/general_service.dart';
 
-import '../models/info/app_info_model.dart';
-import '../models/info/contact_info.dart';
+import '../../models/info/app_info_model.dart';
+import '../../models/info/contact_info.dart';
 
 class GeneralController extends GetxController {
   final Dio dio;

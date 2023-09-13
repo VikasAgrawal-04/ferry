@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:goa/src/controllers/route_controller.dart';
+import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:goa/src/views/widgets/card/white_box_card.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 class TransferPass extends StatefulWidget {
   const TransferPass({super.key});
@@ -40,7 +41,7 @@ class _TransferPassState extends State<TransferPass> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "IMPORTANT !! \n\n ONCE YOUR TRANSFER YOU WILL NOT BE ABLE TO USE THIS  PASS ON THIS DEVICE.",
+                    "IMPORTANT !! \n\n ONCE YOU START TRANSFER YOU WILL NOT BE ABLE TO USE THIS  PASS ON THIS DEVICE.",
                     textAlign: TextAlign.center,
                     style: theme.bodyMedium
                         ?.copyWith(color: Colors.redAccent, height: 0.12.h),
@@ -63,20 +64,42 @@ class _TransferPassState extends State<TransferPass> {
                           padding: EdgeInsets.only(bottom: 1.2.h),
                           child: InkWell(
                             onTap: () {
-                              Get.defaultDialog(
-                                  title: 'Are You Sure?',
-                                  middleText: 'You Want To Transfer Pass?',
-                                  textConfirm: 'Yes',
-                                  textCancel: 'No',
-                                  confirmTextColor: Colors.white,
-                                  onConfirm: () async {
-                                    await routeController.transferPass(
-                                        passCode: data.passcode);
-                                  });
+                              if (data.transfers!.isEmpty) {
+                                Get.defaultDialog(
+                                    title: 'Are You Sure?',
+                                    middleText: 'You Want To Transfer Pass?',
+                                    textConfirm: 'Yes',
+                                    textCancel: 'No',
+                                    confirmTextColor: Colors.white,
+                                    onConfirm: () async {
+                                      await routeController.transferPass(
+                                          passCode: data.passcode);
+                                    });
+                              } else {
+                                Get.defaultDialog(
+                                    title: 'Your Trasnfer Code',
+                                    textConfirm: 'Ok',
+                                    onConfirm: () {
+                                      Get.back();
+                                    },
+                                    content: SizedBox(
+                                      height: 10.h,
+                                      child: SfBarcodeGenerator(
+                                          value: data
+                                              .transfers!.first.transfercode),
+                                    ));
+                              }
                             },
                             splashColor: Colors.transparent,
-                            child: WhiteBoxCard(
-                                children: [Text("${data.passname} ")]),
+                            child: WhiteBoxCard(children: [
+                              Text(data.passname,
+                                  style: theme.bodyMedium
+                                      ?.copyWith(fontWeight: FontWeight.w600)),
+                              if (data.transfers!.isNotEmpty) ...{
+                                Text(
+                                    "Transfer Code : ${data.transfers?.first.transfercode}")
+                              }
+                            ]),
                           ),
                         );
                       })

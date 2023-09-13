@@ -19,6 +19,7 @@ class EndPoints {
   static const String getPassByRoute = 'get_pass_by_route.php';
   static const String createPass = 'create_pass_sale.php';
   static const String currentPass = 'get_current_passes.php';
+  static const String purchaseHistory = 'get_purchase_history.php';
 
   //General
   static const String appInfo = 'get_all_app_information.php';

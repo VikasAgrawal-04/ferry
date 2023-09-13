@@ -2,10 +2,11 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:goa/src/core/utils/constants/api_endpoints.dart';
 import 'package:goa/src/core/utils/constants/keys.dart';
-import 'package:goa/src/core/utils/errors/failures.dart';
+import 'package:goa/src/core/errors/failures.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
 import 'package:goa/src/models/routes/routes_info_model.dart';
 
+import '../../src/models/purchase_history/purchase_history_model.dart';
 import '../../src/models/routes/route_passes.dart';
 import '../../src/models/your_pass/your_passes_model.dart';
 
@@ -98,6 +99,18 @@ class RouteService {
         "userid": userId
       });
       return Right(response!);
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
+
+  Future<Either<Failure, PurchaseHistory>> purchaseHistory() async {
+    try {
+      final userId = Helpers.getString(key: Keys.userId);
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.purchaseHistory,
+          queryParams: {"userid": userId});
+      return Right(PurchaseHistory.fromJson(response!));
     } on ServerFailure catch (error) {
       return Left(ServerFailure(message: error.message.toString()));
     }

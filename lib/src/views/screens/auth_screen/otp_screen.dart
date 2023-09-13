@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:goa/src/controllers/auth_controller.dart';
+import 'package:goa/src/controllers/api_controller/auth_controller.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';

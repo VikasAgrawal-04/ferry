@@ -4,7 +4,7 @@ import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../../controllers/auth_controller.dart';
+import '../../../../controllers/api_controller/auth_controller.dart';
 import '../../../widgets/textfield/custom_text_field.dart';
 
 class SendOtpScreen extends StatefulWidget {

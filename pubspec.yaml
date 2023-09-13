@@ -42,7 +42,6 @@ dependencies:
   path_provider: ^2.1.0
   logger: ^2.0.1
   connectivity_plus: ^4.0.2
-
   dartz: ^0.10.1
   flutter_dotenv: ^5.1.0
   shared_preferences: ^2.2.0
@@ -53,6 +52,9 @@ dependencies:
   responsive_sizer: ^3.2.0
   syncfusion_flutter_barcodes: ^22.2.10
   flutter_html: ^3.0.0-beta.2
+  ai_barcode_scanner: ^0.0.7
+  sqflite: ^2.3.0
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:

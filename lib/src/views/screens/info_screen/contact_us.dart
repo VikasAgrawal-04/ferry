@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../controllers/general_controller.dart';
+import '../../../controllers/api_controller/general_controller.dart';
 
 class ContactUs extends StatefulWidget {
   const ContactUs({super.key});

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:goa/src/views/screens/settings_screen/scanner.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../controllers/route_controller.dart';
+import '../../../controllers/api_controller/route_controller.dart';
 import '../../../core/utils/constants/colors.dart';
 
 class ImportPass extends StatefulWidget {
@@ -86,7 +87,9 @@ class _ImportPassState extends State<ImportPass> {
                     margin: EdgeInsets.symmetric(horizontal: 8.w),
                     text: "Scan Barcode",
                     color: AppColors.greenBg,
-                    onTap: () {},
+                    onTap: () async {
+                      await Get.to(ScannerScreen());
+                    },
                     height: 5.5.h,
                   ),
                 ],

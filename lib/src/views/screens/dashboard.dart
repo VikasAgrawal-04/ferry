@@ -32,7 +32,7 @@ class _DashBoardState extends State<DashBoard> {
     Icons.settings,
     Icons.info_outlined,
   ];
-  final List<Widget> pages = [
+  final List<Widget> pages = const [
     RouteListingScreen(),
     PassHistoryScreen(),
     YourPassScreen(),

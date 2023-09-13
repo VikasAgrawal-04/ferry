@@ -1,7 +1,7 @@
 import 'package:get/route_manager.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/middlewares/global_middleware.dart';
-import 'package:goa/src/views/screens/auth_screen/forgot_password/new_pass_screen.dart';
+import 'package:goa/src/views/screens/auth_screen/forgot_password/new_password_screen.dart';
 import 'package:goa/src/views/screens/auth_screen/forgot_password/sent_otp_screen.dart';
 import 'package:goa/src/views/screens/auth_screen/login.dart';
 import 'package:goa/src/views/screens/auth_screen/otp_screen.dart';

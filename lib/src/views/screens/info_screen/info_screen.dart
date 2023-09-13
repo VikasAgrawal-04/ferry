@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/routing_services/routes.dart';
-import 'package:goa/src/controllers/general_controller.dart';
+import 'package:goa/src/controllers/api_controller/general_controller.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../core/utils/constants/colors.dart';
@@ -33,7 +33,21 @@ class _InfoScreenState extends State<InfoScreen> {
       body: Column(
         children: [
           SizedBox(height: 5.h),
-          Image.asset('assets/images/main5.PNG'),
+          SizedBox(
+            height: 40.h,
+            child: Image.asset(
+              'assets/images/main5.PNG',
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) return child;
+                return AnimatedOpacity(
+                  opacity: frame == null ? 0 : 1,
+                  duration: const Duration(seconds: 2),
+                  curve: Curves.easeOut,
+                  child: child,
+                );
+              },
+            ),
+          ),
           Text("Information", style: theme.displayLarge),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),

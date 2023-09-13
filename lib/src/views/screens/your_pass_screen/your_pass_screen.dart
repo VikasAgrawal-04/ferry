@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/routing_services/routes.dart';
-import 'package:goa/src/controllers/route_controller.dart';
+import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:goa/src/core/utils/constants/colors.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:goa/src/views/widgets/card/white_box_card.dart';
@@ -28,9 +28,9 @@ class _YourPassScreenState extends State<YourPassScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await routeController.getYourPasses();
       startClock();
       startBlinking();
+      await routeController.getYourPasses();
     });
     super.initState();
   }
@@ -53,7 +53,29 @@ class _YourPassScreenState extends State<YourPassScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text('Your Passes', style: theme.displayMedium),
+        title: Column(
+          children: [
+            Text('Your Passes', style: theme.displayMedium),
+            Obx(() => Text(Helpers.formatTimeDate(initialDateTime.value),
+                style: theme.bodySmall))
+          ],
+        ),
+        actions: [
+          Obx(() => AnimatedOpacity(
+                opacity: animationValue.value,
+                duration: const Duration(milliseconds: 400),
+                child: AnimatedContainer(
+                  margin: EdgeInsets.only(right: 4.w),
+                  duration: const Duration(milliseconds: 400),
+                  width: 4.w,
+                  height: 1.5.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.greenBg,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -70,88 +92,73 @@ class _YourPassScreenState extends State<YourPassScreen> {
                         )
                       : Column(
                           children: [
-                            Stack(
-                              children: [
-                                SizedBox(
-                                  height: 62.h,
-                                  child: Obx(
-                                    () => WhiteBoxCard(
-                                        margin: EdgeInsets.only(
-                                            top: 1.h, left: 4.w, right: 4.w),
+                            SizedBox(
+                              height: 60.h,
+                              child: Obx(
+                                () => WhiteBoxCard(
+                                    margin: EdgeInsets.only(
+                                        top: 0.8.h, left: 4.w, right: 4.w),
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            routeController
+                                                .yourPasses[_selectedPass.value]
+                                                .routename,
+                                            style: theme.bodyMedium,
+                                            textAlign: TextAlign.center),
+                                      ),
+                                      Stack(
                                         children: [
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                                routeController
-                                                    .yourPasses[
-                                                        _selectedPass.value]
-                                                    .routename,
-                                                style: theme.bodyMedium,
-                                                textAlign: TextAlign.center),
-                                          ),
                                           SizedBox(
-                                            height: 37.h,
+                                            height: 36.h,
                                             child: Helpers.imgFromBase64(
                                                 routeController
                                                     .yourPasses[
                                                         _selectedPass.value]
                                                     .routeimg),
                                           ),
-                                          SizedBox(
-                                            height: 11.h,
-                                            child: SfBarcodeGenerator(
-                                                symbology: Code128A(module: 2),
-                                                showValue: true,
-                                                value: routeController
-                                                    .yourPasses[
-                                                        _selectedPass.value]
-                                                    .passcode),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              "Valid Till : ${Helpers.formattedDate(routeController.yourPasses[_selectedPass.value].validTillDate)}",
-                                              style: theme.bodyMedium,
-                                            ),
-                                          ),
-                                          Center(
-                                            child: Text(
-                                              Helpers.formatTimeDate(
-                                                  initialDateTime.value),
-                                              style: theme.bodySmall,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 2.h,
-                                  right: 4.h,
-                                  child: AnimatedOpacity(
-                                    opacity: animationValue.value,
-                                    duration: const Duration(milliseconds: 400),
-                                    child: AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 400),
-                                      width: 4.w,
-                                      height: 1.5.h,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.greenBg,
-                                        shape: BoxShape.circle,
+                                          Positioned(
+                                              left: 5.w,
+                                              top: 1.5.h,
+                                              child: Text(
+                                                  routeController
+                                                      .yourPasses[
+                                                          _selectedPass.value]
+                                                      .vehicletype,
+                                                  style: theme.bodyLarge
+                                                      ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w600)))
+                                        ],
                                       ),
-                                    ),
-                                  ),
-                                )
-                              ],
+                                      SizedBox(
+                                        height: 14.h,
+                                        child: SfBarcodeGenerator(
+                                            symbology: Code128A(module: 2),
+                                            showValue: true,
+                                            value: routeController
+                                                .yourPasses[_selectedPass.value]
+                                                .passcode),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          "Valid Till : ${Helpers.formattedDate(routeController.yourPasses[_selectedPass.value].validTillDate)}",
+                                          style: theme.bodyMedium,
+                                        ),
+                                      ),
+                                    ]),
+                              ),
                             ),
                             SizedBox(
-                              height: 8.h,
+                              height: 9.5.h,
                               child: ListView.builder(
                                   itemCount: routeController.yourPasses.length,
                                   scrollDirection: Axis.horizontal,
                                   shrinkWrap: true,
                                   padding: EdgeInsets.symmetric(
-                                      vertical: 1.5.h, horizontal: 4.w),
+                                      vertical: 1.h, horizontal: 4.w),
                                   itemBuilder: (context, index) {
                                     final data =
                                         routeController.yourPasses[index];
@@ -164,7 +171,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                         () => Container(
                                           margin: EdgeInsets.only(left: 2.w),
                                           padding: EdgeInsets.symmetric(
-                                              horizontal: 2.w, vertical: 0.5.h),
+                                              horizontal: 4.w, vertical: 0.5.h),
                                           decoration: BoxDecoration(
                                               color:
                                                   _selectedPass.value == index
@@ -179,13 +186,36 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                                   offset: const Offset(0, 3),
                                                 ),
                                               ]),
-                                          child: Text(data.routename,
-                                              style: theme.bodyMedium?.copyWith(
-                                                  color: _selectedPass.value ==
-                                                          index
-                                                      ? AppColors.textWhite
-                                                      : AppColors.txtPrimary),
-                                              textAlign: TextAlign.center),
+                                          child: Column(
+                                            children: [
+                                              Text(data.routename,
+                                                  style: theme.bodyMedium
+                                                      ?.copyWith(
+                                                          color: _selectedPass
+                                                                      .value ==
+                                                                  index
+                                                              ? AppColors
+                                                                  .textWhite
+                                                              : AppColors
+                                                                  .txtPrimary),
+                                                  textAlign: TextAlign.center),
+                                              data.vehicletype == "2"
+                                                  ? Icon(Icons.two_wheeler,
+                                                      color: _selectedPass
+                                                                  .value ==
+                                                              index
+                                                          ? AppColors.textWhite
+                                                          : AppColors
+                                                              .txtPrimary)
+                                                  : Icon(Icons.directions_car,
+                                                      color: _selectedPass
+                                                                  .value ==
+                                                              index
+                                                          ? AppColors.textWhite
+                                                          : AppColors
+                                                              .txtPrimary),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     );

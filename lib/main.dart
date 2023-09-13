@@ -7,6 +7,7 @@ import 'package:goa/services/routing_services/router.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/core/theme/theme.dart';
 import 'package:goa/src/core/utils/environment.dart';
+import 'package:goa/src/core/utils/helpers/database_helpers.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
 import 'package:goa/src/injector.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -16,6 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: Environment.fileName);
   DependencyInjector.inject();
+  await DatabaseHelper.instance.fetchDatabase;
   SharedPreferences.getInstance().then((prefs) {
     // Initialize SharedPreferences before running the app
     Helpers.prefs = prefs; // Set the instance in your Helpers class

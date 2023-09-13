@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/routing_services/routes.dart';
-import 'package:goa/src/controllers/route_controller.dart';
+import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:goa/src/models/routes/routes_info_model.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -74,7 +74,21 @@ class _VehicleScreenState extends State<VehicleScreen> {
         padding: EdgeInsets.all(.5.h),
         child: Column(
           children: [
-            Image.asset(img),
+            SizedBox(
+              height: 32.h,
+              child: Image.asset(
+                img,
+                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                  if (wasSynchronouslyLoaded) return child;
+                  return AnimatedOpacity(
+                    opacity: frame == null ? 0 : 1,
+                    duration: const Duration(seconds: 2),
+                    curve: Curves.easeOut,
+                    child: child,
+                  );
+                },
+              ),
+            ),
             SizedBox(height: 1.h),
             Text(name, textAlign: TextAlign.center)
           ],
