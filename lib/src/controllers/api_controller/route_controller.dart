@@ -19,7 +19,7 @@ class RouteController extends GetxController {
   RouteController({required this.dio});
   late final RouteService _service = RouteService(dio: dio);
   final database = DatabaseHelper.instance;
-final network = Get.find<NetworkController>();
+  final network = Get.find<NetworkController>();
 
   //List Of Routes
   final routesName = <RouteDatum>[].obs;
@@ -107,11 +107,10 @@ final network = Get.find<NetworkController>();
     EasyLoading.show();
     yourPasses.clear();
     onlyYourPasses.clear();
-
     final res = await database.fetchPasses();
     yourPasses.addAll(res);
     for (final pass in res) {
-      if (pass.isUnderTransfer == "1") {
+      if (pass.isUnderTransfer == "0") {
         onlyYourPasses.add(pass);
       }
     }
