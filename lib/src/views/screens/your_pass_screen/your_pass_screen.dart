@@ -30,6 +30,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       startClock();
       startBlinking();
+      await Future.delayed(const Duration(milliseconds: 600));
       await routeController.getYourPasses();
     });
     super.initState();
@@ -82,7 +83,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
           children: [
             Obx(() => SizedBox(
                   height: 70.h,
-                  child: routeController.yourPasses.isEmpty
+                  child: routeController.onlyYourPasses.isEmpty
                       ? Center(
                           child: Text(
                             "You Do Not Have Any Passes. \n Please Buy!",
@@ -103,7 +104,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                         alignment: Alignment.center,
                                         child: Text(
                                             routeController
-                                                .yourPasses[_selectedPass.value]
+                                                .onlyYourPasses[_selectedPass.value]
                                                 .routename,
                                             style: theme.bodyMedium,
                                             textAlign: TextAlign.center),
@@ -111,10 +112,10 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                       Stack(
                                         children: [
                                           SizedBox(
-                                            height: 36.h,
+                                            height: 35.5.h,
                                             child: Helpers.imgFromBase64(
                                                 routeController
-                                                    .yourPasses[
+                                                    .onlyYourPasses[
                                                         _selectedPass.value]
                                                     .routeimg),
                                           ),
@@ -123,7 +124,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                               top: 1.5.h,
                                               child: Text(
                                                   routeController
-                                                      .yourPasses[
+                                                      .onlyYourPasses[
                                                           _selectedPass.value]
                                                       .vehicletype,
                                                   style: theme.bodyLarge
@@ -138,13 +139,13 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                             symbology: Code128A(module: 2),
                                             showValue: true,
                                             value: routeController
-                                                .yourPasses[_selectedPass.value]
+                                                .onlyYourPasses[_selectedPass.value]
                                                 .passcode),
                                       ),
                                       Align(
                                         alignment: Alignment.center,
                                         child: Text(
-                                          "Valid Till : ${Helpers.formattedDate(routeController.yourPasses[_selectedPass.value].validTillDate)}",
+                                          "Valid Till : ${Helpers.formattedDate(routeController.onlyYourPasses[_selectedPass.value].validTillDate)}",
                                           style: theme.bodyMedium,
                                         ),
                                       ),
@@ -152,16 +153,16 @@ class _YourPassScreenState extends State<YourPassScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 9.5.h,
+                              height: 10.h,
                               child: ListView.builder(
-                                  itemCount: routeController.yourPasses.length,
+                                  itemCount: routeController.onlyYourPasses.length,
                                   scrollDirection: Axis.horizontal,
                                   shrinkWrap: true,
                                   padding: EdgeInsets.symmetric(
                                       vertical: 1.h, horizontal: 4.w),
                                   itemBuilder: (context, index) {
                                     final data =
-                                        routeController.yourPasses[index];
+                                        routeController.onlyYourPasses[index];
                                     return InkWell(
                                       onTap: () {
                                         _selectedPass.value = index;

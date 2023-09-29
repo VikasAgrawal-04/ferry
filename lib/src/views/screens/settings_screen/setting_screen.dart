@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:goa/src/core/utils/helpers/database_helpers.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -94,6 +95,7 @@ class SettingScreen extends StatelessWidget {
                         SharedPreferences sharedPreferences =
                             await SharedPreferences.getInstance();
                         sharedPreferences.clear();
+                        DatabaseHelper.instance.deleteEverything();
                         Get.offAllNamed(AppRoutes.login);
                       },
                       child: Card(

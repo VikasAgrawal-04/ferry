@@ -17,7 +17,17 @@ class _PassScreenState extends State<PassScreen> {
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(title: Text(routeName, style: theme.displayMedium)),
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(9.h),
+          child: AppBar(
+            title: Text(routeName, style: theme.displayMedium),
+            flexibleSpace: Padding(
+                padding: EdgeInsets.only(top: 8.5.h),
+                child: const Text(
+                  "Select Pass",
+                  textAlign: TextAlign.center,
+                )),
+          )),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
         child: SingleChildScrollView(

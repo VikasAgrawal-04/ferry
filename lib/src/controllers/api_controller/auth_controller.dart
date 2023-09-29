@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/api_services/auth_services.dart';
+import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:goa/src/core/utils/constants/keys.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
 
@@ -14,6 +15,7 @@ class AuthController extends GetxController {
   final Dio dio;
   AuthController({required this.dio});
   late final AuthServices _services = AuthServices(dio: dio);
+  final routeController = Get.find<RouteController>();
 
   Future<bool> login({required String number, required String password}) async {
     bool success = true;
@@ -24,9 +26,10 @@ class AuthController extends GetxController {
         if (r.data?.isotpverified == "1") {
           EasyLoading.showSuccess(r.message);
           await Helpers.setString(
-              key: Keys.userData, value: jsonEncode(r.data));
-          await Helpers.setString(
               key: Keys.userId, value: r.data!.userid.toString());
+          await routeController.downloadPasses();
+          await Helpers.setString(
+              key: Keys.userData, value: jsonEncode(r.data));
           Get.offAndToNamed(AppRoutes.dashboard);
         } else {
           EasyLoading.showInfo("Please Complete OTP Verification");

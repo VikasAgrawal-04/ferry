@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/api_services/route_services.dart';
 import 'package:goa/services/routing_services/routes.dart';
+import 'package:goa/src/core/utils/helpers/database_helpers.dart';
 import 'package:goa/src/models/routes/routes_info_model.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
@@ -16,6 +17,7 @@ class RouteController extends GetxController {
   final Dio dio;
   RouteController({required this.dio});
   late final RouteService _service = RouteService(dio: dio);
+  final database = DatabaseHelper.instance;
 
   //List Of Routes
   final routesName = <RouteDatum>[].obs;
@@ -23,20 +25,20 @@ class RouteController extends GetxController {
   //List of Passes
   final passes = <Pass>[].obs;
   final yourPasses = <YourPassDatum>[].obs;
+  final onlyYourPasses = <YourPassDatum>[].obs;
   final passesHistory = <PurchaseDatum>[].obs;
   final passesImg = ['assets/images/6.PNG', 'assets/images/9.PNG'];
 
-  // Future<void> savePasses() async {
-  //   EasyLoading.show();
-  //   yourPasses.clear();
-  //   final successOrFailure = await _service.getYourPasses();
-  //   successOrFailure.fold((l) => debugPrint("Error In Get Your Passes $l"),
-  //       (r) async {
-  //     if (r.success) {
-  //     }
-  //   });
-  //   EasyLoading.dismiss();
-  // }
+  Future<void> downloadPasses() async {
+    final successOrFailure = await _service.getYourPasses();
+    successOrFailure.fold((l) => debugPrint("Error In Get Your Passes $l"),
+        (r) async {
+      if (r.success) {
+        database.deletePasses();
+        database.insertPasses(r.data);
+      }
+    });
+  }
 
   Future<void> fetchRoutes() async {
     EasyLoading.show();
@@ -79,6 +81,7 @@ class RouteController extends GetxController {
         (r) async {
       if (r['success']) {
         EasyLoading.showSuccess(r['message']);
+        await downloadPasses();
         Get.offAllNamed(AppRoutes.dashboard);
       } else {
         EasyLoading.showError(r['message']);
@@ -90,13 +93,15 @@ class RouteController extends GetxController {
   Future<void> getYourPasses() async {
     EasyLoading.show();
     yourPasses.clear();
-    final successOrFailure = await _service.getYourPasses();
-    successOrFailure.fold((l) => debugPrint("Error In Get Your Passes $l"),
-        (r) async {
-      if (r.success) {
-        yourPasses.addAll(r.data);
+    onlyYourPasses.clear();
+
+    final res = await database.fetchPasses();
+    yourPasses.addAll(res);
+    for (final pass in res) {
+      if (pass.isUnderTransfer == "1") {
+        onlyYourPasses.add(pass);
       }
-    });
+    }
     EasyLoading.dismiss();
   }
 
@@ -107,6 +112,7 @@ class RouteController extends GetxController {
     successOrFailure.fold((l) => debugPrint("Error In Transfer Pass $l"),
         (r) async {
       if (r['success']) {
+        await downloadPasses();
         Get.defaultDialog(
             title: "${r['message']} \n Transfer Code: ${r['transfercode']}",
             content: SizedBox(
@@ -136,6 +142,7 @@ class RouteController extends GetxController {
         (r) async {
       if (r['success']) {
         EasyLoading.showSuccess(r['message']);
+        await downloadPasses();
         Get.back();
       } else {
         EasyLoading.showError(r['message']);
