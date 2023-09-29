@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/api_services/route_services.dart';
 import 'package:goa/services/routing_services/routes.dart';
+import 'package:goa/src/controllers/network/network_controller.dart';
 import 'package:goa/src/core/utils/helpers/database_helpers.dart';
 import 'package:goa/src/models/routes/routes_info_model.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -18,6 +19,7 @@ class RouteController extends GetxController {
   RouteController({required this.dio});
   late final RouteService _service = RouteService(dio: dio);
   final database = DatabaseHelper.instance;
+final network = Get.find<NetworkController>();
 
   //List Of Routes
   final routesName = <RouteDatum>[].obs;
@@ -30,48 +32,59 @@ class RouteController extends GetxController {
   final passesImg = ['assets/images/6.PNG', 'assets/images/9.PNG'];
 
   Future<void> downloadPasses() async {
-    final successOrFailure = await _service.getYourPasses();
-    successOrFailure.fold((l) => debugPrint("Error In Get Your Passes $l"),
-        (r) async {
-      if (r.success) {
-        database.deletePasses();
-        database.insertPasses(r.data);
-      }
-    });
+    if (network.isOnline) {
+      final successOrFailure = await _service.getYourPasses();
+      successOrFailure.fold((l) => debugPrint("Error In Get Your Passes $l"),
+          (r) async {
+        if (r.success) {
+          database.deletePasses();
+          database.insertPasses(r.data);
+        }
+      });
+    }
   }
 
   Future<void> fetchRoutes() async {
-    EasyLoading.show();
-    final successOrFailure = await _service.fetchRoutes();
-    successOrFailure.fold((l) => debugPrint("Error In Fetch Routes $l"), (r) {
-      routesName.clear();
-      if (r.success) {
-        routesName.addAll(r.routes);
-        EasyLoading.dismiss();
-      }
-    });
+    if (network.isOnline) {
+      EasyLoading.show();
+      final successOrFailure = await _service.fetchRoutes();
+      successOrFailure.fold((l) => debugPrint("Error In Fetch Routes $l"), (r) {
+        routesName.clear();
+        if (r.success) {
+          routesName.addAll(r.routes);
+          EasyLoading.dismiss();
+        }
+      });
+    } else {
+      EasyLoading.showInfo("Your Are OFFLINE!");
+    }
   }
 
   Future<bool> getRoutePasses(
       {required int routeId, required String vehicleType}) async {
-    EasyLoading.show();
-    bool returnType = false;
-    final failureOrSuccess = await _service.getRoutePasses(
-        routeId: routeId, vehicleType: vehicleType);
-    failureOrSuccess.fold((l) => debugPrint("Error In Get Route Passes $l"),
-        (r) {
-      passes.clear();
-      if (r.success) {
-        passes.addAll(r.passes);
-        EasyLoading.showSuccess(r.message);
-        returnType = true;
-      } else {
-        EasyLoading.showError(r.message);
-        returnType = false;
-      }
-    });
-    EasyLoading.dismiss();
-    return returnType;
+    if (network.isOnline) {
+      EasyLoading.show();
+      bool returnType = false;
+      final failureOrSuccess = await _service.getRoutePasses(
+          routeId: routeId, vehicleType: vehicleType);
+      failureOrSuccess.fold((l) => debugPrint("Error In Get Route Passes $l"),
+          (r) {
+        passes.clear();
+        if (r.success) {
+          passes.addAll(r.passes);
+          EasyLoading.showSuccess(r.message);
+          returnType = true;
+        } else {
+          EasyLoading.showError(r.message);
+          returnType = false;
+        }
+      });
+      EasyLoading.dismiss();
+      return returnType;
+    } else {
+      EasyLoading.showInfo("Your Are OFFLINE!");
+      return false;
+    }
   }
 
   Future<void> createPass({required int passId}) async {
@@ -106,60 +119,72 @@ class RouteController extends GetxController {
   }
 
   Future<void> transferPass({required String passCode}) async {
-    EasyLoading.show();
-    final successOrFailure = await _service.transferPass(passCode: passCode);
-    EasyLoading.dismiss();
-    successOrFailure.fold((l) => debugPrint("Error In Transfer Pass $l"),
-        (r) async {
-      if (r['success']) {
-        await downloadPasses();
-        Get.defaultDialog(
-            title: "${r['message']} \n Transfer Code: ${r['transfercode']}",
-            content: SizedBox(
-              height: 10.h,
-              child: SfBarcodeGenerator(
-                showValue: true,
-                value: r['transfercode'],
-                symbology: Code128A(module: 2),
+    if (network.isOnline) {
+      EasyLoading.show();
+      final successOrFailure = await _service.transferPass(passCode: passCode);
+      EasyLoading.dismiss();
+      successOrFailure.fold((l) => debugPrint("Error In Transfer Pass $l"),
+          (r) async {
+        if (r['success']) {
+          await downloadPasses();
+          Get.defaultDialog(
+              title: "${r['message']} \n Transfer Code: ${r['transfercode']}",
+              content: SizedBox(
+                height: 10.h,
+                child: SfBarcodeGenerator(
+                  showValue: true,
+                  value: r['transfercode'],
+                  symbology: Code128A(module: 2),
+                ),
               ),
-            ),
-            textConfirm: 'Ok',
-            onConfirm: () {
-              Get.offAllNamed(AppRoutes.dashboard);
-            });
-      } else {
-        EasyLoading.showError(r['message']);
-      }
-    });
+              textConfirm: 'Ok',
+              onConfirm: () {
+                Get.offAllNamed(AppRoutes.dashboard);
+              });
+        } else {
+          EasyLoading.showError(r['message']);
+        }
+      });
+    } else {
+      EasyLoading.showInfo("Your Are OFFLINE!");
+    }
   }
 
   Future<void> importPass({required String transferCode}) async {
-    EasyLoading.show();
-    final successOrFailure =
-        await _service.importPass(transferCode: transferCode);
-    EasyLoading.dismiss();
-    successOrFailure.fold((l) => debugPrint("Error In Import Pass $l"),
-        (r) async {
-      if (r['success']) {
-        EasyLoading.showSuccess(r['message']);
-        await downloadPasses();
-        Get.back();
-      } else {
-        EasyLoading.showError(r['message']);
-      }
-    });
+    if (network.isOnline) {
+      EasyLoading.show();
+      final successOrFailure =
+          await _service.importPass(transferCode: transferCode);
+      EasyLoading.dismiss();
+      successOrFailure.fold((l) => debugPrint("Error In Import Pass $l"),
+          (r) async {
+        if (r['success']) {
+          EasyLoading.showSuccess(r['message']);
+          await downloadPasses();
+          Get.back();
+        } else {
+          EasyLoading.showError(r['message']);
+        }
+      });
+    } else {
+      EasyLoading.showInfo("Your Are OFFLINE!");
+    }
   }
 
   Future<void> purchaseHistory() async {
-    EasyLoading.show();
-    final failureOrSuccess = await _service.purchaseHistory();
-    passesHistory.clear();
-    EasyLoading.dismiss();
-    failureOrSuccess.fold((l) => debugPrint("Error In Purchase History $l"),
-        (r) {
-      if (r.success) {
-        passesHistory.addAll(r.data);
-      }
-    });
+    if (network.isOnline) {
+      EasyLoading.show();
+      final failureOrSuccess = await _service.purchaseHistory();
+      passesHistory.clear();
+      EasyLoading.dismiss();
+      failureOrSuccess.fold((l) => debugPrint("Error In Purchase History $l"),
+          (r) {
+        if (r.success) {
+          passesHistory.addAll(r.data);
+        }
+      });
+    } else {
+      EasyLoading.showInfo("Your Are OFFLINE!");
+    }
   }
 }
