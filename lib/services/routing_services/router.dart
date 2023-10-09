@@ -8,11 +8,13 @@ import 'package:goa/src/views/screens/auth_screen/otp_screen.dart';
 import 'package:goa/src/views/screens/dashboard.dart';
 import 'package:goa/src/views/screens/info_screen/contact_us.dart';
 import 'package:goa/src/views/screens/info_screen/info_detail_screen.dart';
+import 'package:goa/src/views/screens/passes_screen/paper_pass_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/pass_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
 import 'package:goa/src/views/screens/passes_screen/vehicle_screen.dart';
 import 'package:goa/src/views/screens/settings_screen/change_inside_password.dart';
 import 'package:goa/src/views/screens/settings_screen/import_pass.dart';
+import 'package:goa/src/views/screens/settings_screen/paper_scan_screen.dart';
 import 'package:goa/src/views/screens/settings_screen/transfer_pass.dart';
 
 import '../../src/views/screens/auth_screen/register.dart';
@@ -38,6 +40,8 @@ class AppRouter {
     GetPage(name: AppRoutes.changeInPass, page: () => const ChangeInsidePass()),
     GetPage(name: AppRoutes.transferPass, page: () => const TransferPass()),
     GetPage(name: AppRoutes.importPass, page: () => const ImportPass()),
-    GetPage(name: AppRoutes.contactUs, page: () => const ContactUs())
+    GetPage(name: AppRoutes.contactUs, page: () => const ContactUs()),
+    GetPage(name: AppRoutes.paperPass, page: () => const PaperPassScreen()),
+    GetPage(name: AppRoutes.scanPaperPass, page: () => const ScanPaperPass())
   ];
 }

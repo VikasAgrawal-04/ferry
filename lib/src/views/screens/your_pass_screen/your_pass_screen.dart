@@ -104,7 +104,8 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                         alignment: Alignment.center,
                                         child: Text(
                                             routeController
-                                                .onlyYourPasses[_selectedPass.value]
+                                                .onlyYourPasses[
+                                                    _selectedPass.value]
                                                 .routename,
                                             style: theme.bodyMedium,
                                             textAlign: TextAlign.center),
@@ -139,7 +140,8 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                             symbology: Code128A(module: 2),
                                             showValue: true,
                                             value: routeController
-                                                .onlyYourPasses[_selectedPass.value]
+                                                .onlyYourPasses[
+                                                    _selectedPass.value]
                                                 .passcode),
                                       ),
                                       Align(
@@ -155,7 +157,8 @@ class _YourPassScreenState extends State<YourPassScreen> {
                             SizedBox(
                               height: 10.h,
                               child: ListView.builder(
-                                  itemCount: routeController.onlyYourPasses.length,
+                                  itemCount:
+                                      routeController.onlyYourPasses.length,
                                   scrollDirection: Axis.horizontal,
                                   shrinkWrap: true,
                                   padding: EdgeInsets.symmetric(
@@ -226,16 +229,30 @@ class _YourPassScreenState extends State<YourPassScreen> {
                         ),
                 )),
             Divider(indent: 5.w, endIndent: 5.w),
-            Center(
-              child: CustomButtonNew(
-                height: 5.5.h,
-                onTap: () {
-                  Get.toNamed(AppRoutes.routeListing);
-                },
-                margin: EdgeInsets.symmetric(horizontal: 8.w),
-                color: AppColors.greenBg,
-                text: 'Buy Passes!',
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButtonNew(
+                    height: 5.5.h,
+                    onTap: () {
+                      Get.toNamed(AppRoutes.routeListing);
+                    },
+                    margin: EdgeInsets.symmetric(horizontal: 4.w),
+                    color: AppColors.greenBg,
+                    text: 'Buy Passes!',
+                  ),
+                ),
+                Expanded(
+                    child: CustomButtonNew(
+                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                  height: 5.5.h,
+                  color: AppColors.greenBg,
+                  text: 'Paper Passes!',
+                  onTap: () {
+                    Get.toNamed(AppRoutes.paperPass);
+                  },
+                ))
+              ],
             )
           ],
         ),

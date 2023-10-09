@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:goa/src/core/errors/failures.dart';
 import 'package:goa/src/core/utils/constants/api_endpoints.dart';
 import 'package:goa/src/core/utils/constants/keys.dart';
-import 'package:goa/src/core/errors/failures.dart';
 import 'package:goa/src/core/utils/helpers/helpers.dart';
 import 'package:goa/src/models/routes/routes_info_model.dart';
 
@@ -80,6 +80,23 @@ class RouteService {
         "passcode": passCode,
         "currentdeviceid": deviceId,
         "currentuserid": userId
+      });
+      return Right(response!);
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
+
+  Future<Either<Failure, Map<String, dynamic>>> checkPaperPass(
+      {required String paperPass}) async {
+    try {
+      final userId = Helpers.getString(key: Keys.userId);
+      final deviceId = Helpers.getString(key: Keys.deviceId);
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.paperPass, queryParams: {
+        'paperpassid': paperPass,
+        'userid': userId,
+        'currentdeviceid': deviceId
       });
       return Right(response!);
     } on ServerFailure catch (error) {
