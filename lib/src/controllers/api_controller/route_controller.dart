@@ -104,7 +104,6 @@ class RouteController extends GetxController {
   }
 
   Future<void> getYourPasses() async {
-    print("hehehe haas dele");
     EasyLoading.show();
     yourPasses.clear();
     onlyYourPasses.clear();
