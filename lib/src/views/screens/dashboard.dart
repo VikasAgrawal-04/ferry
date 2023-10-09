@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:goa/services/app_update/check_update.dart';
 import 'package:goa/src/core/utils/constants/colors.dart';
 import 'package:goa/src/views/screens/history_screen/pass_history_screen.dart';
 import 'package:goa/src/views/screens/info_screen/info_screen.dart';
@@ -39,6 +40,15 @@ class _DashBoardState extends State<DashBoard> {
     SettingScreen(),
     InfoScreen()
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await checkForUpdate(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
