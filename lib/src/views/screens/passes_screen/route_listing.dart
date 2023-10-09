@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../core/utils/constants/colors.dart';
 import '../../../models/routes/routes_info_model.dart';
 
 class RouteListingScreen extends StatefulWidget {
@@ -22,13 +19,13 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
   final filteredList = <RouteDatum>[].obs;
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await routeController.fetchRoutes();
-      if (routeController.routesName.isNotEmpty) {
-        filteredList.addAll(routeController.routesName);
-      }
-    });
     super.initState();
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   await routeController.fetchRoutes();
+    //   if (routeController.routesName.isNotEmpty) {
+    //     filteredList.addAll(routeController.routesName);
+    //   }
+    // });
   }
 
   void filterList(String query) {
@@ -39,8 +36,6 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
       filteredList.clear();
       for (var item in routeController.routesName) {
         if (item.routename.toLowerCase().contains(query.toLowerCase())) {
-          print(item.routename);
-          print(query);
           filteredList.add(item);
         }
       }
@@ -74,32 +69,35 @@ class _RouteListingScreenState extends State<RouteListingScreen> {
           ),
         ),
       ),
-      body: Obx(
-        () => ListView.builder(
-            itemCount: filteredList.length,
-            padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
-            itemBuilder: (context, index) {
-              final data = filteredList[index];
-              return InkWell(
-                splashColor: Colors.transparent,
-                onTap: () {
-                  EasyLoading.show();
-                  Get.toNamed(AppRoutes.vehicleListing, arguments: data);
-                },
-                child: Card(
-                  color: AppColors.greenBg,
-                  child: Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w),
-                      child: Text(data.routename,
-                          textAlign: TextAlign.center,
-                          style: theme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white))),
-                ),
-              );
-            }),
+      body: Center(
+        child: Text("Coming Soon!"),
       ),
+      // body: Obx(
+      //   () => ListView.builder(
+      //       itemCount: filteredList.length,
+      //       padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),
+      //       itemBuilder: (context, index) {
+      //         final data = filteredList[index];
+      //         return InkWell(
+      //           splashColor: Colors.transparent,
+      //           onTap: () {
+      //             EasyLoading.show();
+      //             Get.toNamed(AppRoutes.vehicleListing, arguments: data);
+      //           },
+      //           child: Card(
+      //             color: AppColors.greenBg,
+      //             child: Container(
+      //                 margin:
+      //                     EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w),
+      //                 child: Text(data.routename,
+      //                     textAlign: TextAlign.center,
+      //                     style: theme.bodyMedium?.copyWith(
+      //                         fontWeight: FontWeight.w600,
+      //                         color: Colors.white))),
+      //           ),
+      //         );
+      //       }),
+      // ),
     );
   }
 }
