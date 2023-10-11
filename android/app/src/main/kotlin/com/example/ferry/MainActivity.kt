@@ -1,4 +1,4 @@
-package com.example.goa
+package com.example.ferry
 
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
