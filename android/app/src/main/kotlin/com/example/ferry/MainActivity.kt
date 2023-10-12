@@ -1,4 +1,4 @@
-package com.example.ferry
+package com.codanto.goaferryapp
 
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity

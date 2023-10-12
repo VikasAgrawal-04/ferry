@@ -5,7 +5,7 @@ import 'package:new_version_plus/new_version_plus.dart';
 
 Future<void> checkForUpdate(BuildContext context) async {
   final newVersion = NewVersionPlus(
-      androidId: 'com.example.ferry', androidPlayStoreCountry: "es_ES");
+      androidId: 'com.codanto.goaferryapp', androidPlayStoreCountry: "es_ES");
 
   final status = await newVersion.getVersionStatus();
   if (status != null) {
