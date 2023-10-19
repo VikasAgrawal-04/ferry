@@ -25,4 +25,8 @@ class EndPoints {
   //General
   static const String appInfo = 'get_all_app_information.php';
   static const String contactInfo = 'get_contact_info.php';
+
+  //Payment
+  static const String createChecksum = 'order';
+  static const String paytmCallback = 'paytm-callback';
 }

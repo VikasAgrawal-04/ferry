@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/src/controllers/api_controller/route_controller.dart';
+import 'package:goa/src/controllers/payment_controller.dart/paytm_payment.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PassScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class PassScreen extends StatefulWidget {
 class _PassScreenState extends State<PassScreen> {
   final String routeName = Get.arguments;
   final routeController = Get.find<RouteController>();
+  final paytmController = Get.find<PaytmController>();
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
@@ -39,7 +41,9 @@ class _PassScreenState extends State<PassScreen> {
                   name: data.passname,
                   img: img,
                   onTap: () async {
-                    await routeController.createPass(passId: data.passid);
+                    await paytmController.generateChecksum(
+                        passId: data.passid,
+                        amount: double.parse(data.cost).toInt());
                   });
             }),
           ),
