@@ -52,7 +52,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Column(
           children: [
@@ -61,6 +61,12 @@ class _YourPassScreenState extends State<YourPassScreen> {
                 style: theme.bodySmall))
           ],
         ),
+        leading: IconButton(
+            onPressed: () async {
+              await routeController.downloadPasses();
+              await routeController.getYourPasses();
+            },
+            icon: const Icon(Icons.refresh)),
         actions: [
           Obx(() => AnimatedOpacity(
                 opacity: animationValue.value,
@@ -78,183 +84,182 @@ class _YourPassScreenState extends State<YourPassScreen> {
               ))
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Obx(() => SizedBox(
-                  height: 70.h,
-                  child: routeController.onlyYourPasses.isEmpty
-                      ? Center(
-                          child: Text(
-                            "You Do Not Have Any Passes. \n Please Buy!",
-                            style: theme.bodyMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : Column(
-                          children: [
-                            SizedBox(
-                              height: 60.h,
-                              child: Obx(
-                                () => WhiteBoxCard(
-                                    margin: EdgeInsets.only(
-                                        top: 0.8.h, left: 4.w, right: 4.w),
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                            routeController
-                                                .onlyYourPasses[
-                                                    _selectedPass.value]
-                                                .routename,
-                                            style: theme.bodyMedium,
-                                            textAlign: TextAlign.center),
-                                      ),
-                                      Stack(
-                                        children: [
-                                          SizedBox(
-                                            height: 35.5.h,
-                                            child: Helpers.imgFromBase64(
-                                                routeController
-                                                    .onlyYourPasses[
-                                                        _selectedPass.value]
-                                                    .routeimg),
-                                          ),
-                                          Positioned(
-                                              left: 5.w,
-                                              top: 1.5.h,
-                                              child: Icon(routeController
+      body: Column(
+        children: [
+          Obx(() => SizedBox(
+                height: 70.h,
+                child: routeController.onlyYourPasses.isEmpty
+                    ? Center(
+                        child: Text(
+                          "You Do Not Have Any Passes. \n Please Buy!",
+                          style: theme.bodyMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          SizedBox(
+                            height: 60.h,
+                            width: 100.w,
+                            child: Obx(
+                              () => WhiteBoxCard(
+                                  margin: EdgeInsets.only(
+                                      top: 0.8.h, left: 4.w, right: 4.w),
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                          routeController
+                                              .onlyYourPasses[
+                                                  _selectedPass.value]
+                                              .routename,
+                                          style: theme.bodyMedium,
+                                          textAlign: TextAlign.center),
+                                    ),
+                                    Stack(
+                                      children: [
+                                        SizedBox(
+                                          height: 35.5.h,
+                                          child: Helpers.imgFromBase64(
+                                              routeController
+                                                  .onlyYourPasses[
+                                                      _selectedPass.value]
+                                                  .routeimg),
+                                        ),
+                                        Positioned(
+                                            left: 5.w,
+                                            top: 1.5.h,
+                                            child: Icon(
+                                              routeController
                                                           .onlyYourPasses[
                                                               _selectedPass
                                                                   .value]
                                                           .vehicletype ==
                                                       '2'
                                                   ? Icons.two_wheeler
-                                                  : Icons.directions_car,size: 25.sp,))
-                                        ],
+                                                  : Icons.directions_car,
+                                              size: 25.sp,
+                                            ))
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 14.h,
+                                      child: SfBarcodeGenerator(
+                                          symbology: Code128A(module: 2),
+                                          showValue: true,
+                                          value: routeController
+                                              .onlyYourPasses[
+                                                  _selectedPass.value]
+                                              .passcode),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Valid Till : ${Helpers.formattedDate(routeController.onlyYourPasses[_selectedPass.value].validTillDate)}",
+                                        style: theme.bodyMedium,
                                       ),
-                                      SizedBox(
-                                        height: 14.h,
-                                        child: SfBarcodeGenerator(
-                                            symbology: Code128A(module: 2),
-                                            showValue: true,
-                                            value: routeController
-                                                .onlyYourPasses[
-                                                    _selectedPass.value]
-                                                .passcode),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          "Valid Till : ${Helpers.formattedDate(routeController.onlyYourPasses[_selectedPass.value].validTillDate)}",
-                                          style: theme.bodyMedium,
+                                    ),
+                                  ]),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                            child: ListView.builder(
+                                itemCount:
+                                    routeController.onlyYourPasses.length,
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 1.h, horizontal: 4.w),
+                                itemBuilder: (context, index) {
+                                  final data =
+                                      routeController.onlyYourPasses[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      _selectedPass.value = index;
+                                    },
+                                    splashColor: Colors.transparent,
+                                    child: Obx(
+                                      () => Container(
+                                        margin: EdgeInsets.only(left: 2.w),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 4.w, vertical: 0.5.h),
+                                        decoration: BoxDecoration(
+                                            color: _selectedPass.value == index
+                                                ? AppColors.greenBg
+                                                : Colors.white,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.2),
+                                                spreadRadius: 2,
+                                                blurRadius: 5,
+                                                offset: const Offset(0, 3),
+                                              ),
+                                            ]),
+                                        child: Column(
+                                          children: [
+                                            Text(data.routename,
+                                                style: theme.bodyMedium
+                                                    ?.copyWith(
+                                                        color: _selectedPass
+                                                                    .value ==
+                                                                index
+                                                            ? AppColors
+                                                                .textWhite
+                                                            : AppColors
+                                                                .txtPrimary),
+                                                textAlign: TextAlign.center),
+                                            data.vehicletype == "2"
+                                                ? Icon(Icons.two_wheeler,
+                                                    color: _selectedPass
+                                                                .value ==
+                                                            index
+                                                        ? AppColors.textWhite
+                                                        : AppColors.txtPrimary)
+                                                : Icon(Icons.directions_car,
+                                                    color: _selectedPass
+                                                                .value ==
+                                                            index
+                                                        ? AppColors.textWhite
+                                                        : AppColors.txtPrimary),
+                                          ],
                                         ),
                                       ),
-                                    ]),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                              child: ListView.builder(
-                                  itemCount:
-                                      routeController.onlyYourPasses.length,
-                                  scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 1.h, horizontal: 4.w),
-                                  itemBuilder: (context, index) {
-                                    final data =
-                                        routeController.onlyYourPasses[index];
-                                    return InkWell(
-                                      onTap: () {
-                                        _selectedPass.value = index;
-                                      },
-                                      splashColor: Colors.transparent,
-                                      child: Obx(
-                                        () => Container(
-                                          margin: EdgeInsets.only(left: 2.w),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 4.w, vertical: 0.5.h),
-                                          decoration: BoxDecoration(
-                                              color:
-                                                  _selectedPass.value == index
-                                                      ? AppColors.greenBg
-                                                      : Colors.white,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.2),
-                                                  spreadRadius: 2,
-                                                  blurRadius: 5,
-                                                  offset: const Offset(0, 3),
-                                                ),
-                                              ]),
-                                          child: Column(
-                                            children: [
-                                              Text(data.routename,
-                                                  style: theme.bodyMedium
-                                                      ?.copyWith(
-                                                          color: _selectedPass
-                                                                      .value ==
-                                                                  index
-                                                              ? AppColors
-                                                                  .textWhite
-                                                              : AppColors
-                                                                  .txtPrimary),
-                                                  textAlign: TextAlign.center),
-                                              data.vehicletype == "2"
-                                                  ? Icon(Icons.two_wheeler,
-                                                      color: _selectedPass
-                                                                  .value ==
-                                                              index
-                                                          ? AppColors.textWhite
-                                                          : AppColors
-                                                              .txtPrimary)
-                                                  : Icon(Icons.directions_car,
-                                                      color: _selectedPass
-                                                                  .value ==
-                                                              index
-                                                          ? AppColors.textWhite
-                                                          : AppColors
-                                                              .txtPrimary),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                            ),
-                          ],
-                        ),
-                )),
-            Divider(indent: 5.w, endIndent: 5.w),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomButtonNew(
-                    height: 5.5.h,
-                    onTap: () {
-                      Get.toNamed(AppRoutes.routeListing);
-                    },
-                    margin: EdgeInsets.symmetric(horizontal: 4.w),
-                    color: AppColors.greenBg,
-                    text: 'Buy Passes!',
-                  ),
-                ),
-                Expanded(
-                    child: CustomButtonNew(
-                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ],
+                      ),
+              )),
+          Divider(indent: 5.w, endIndent: 5.w),
+          Row(
+            children: [
+              Expanded(
+                child: CustomButtonNew(
                   height: 5.5.h,
-                  color: AppColors.greenBg,
-                  text: 'Paper Passes!',
                   onTap: () {
-                    Get.toNamed(AppRoutes.paperPass);
+                    Get.toNamed(AppRoutes.routeListing);
                   },
-                ))
-              ],
-            )
-          ],
-        ),
+                  margin: EdgeInsets.symmetric(horizontal: 4.w),
+                  color: AppColors.greenBg,
+                  text: 'Buy Passes!',
+                ),
+              ),
+              Expanded(
+                  child: CustomButtonNew(
+                margin: EdgeInsets.symmetric(horizontal: 4.w),
+                height: 5.5.h,
+                color: AppColors.greenBg,
+                text: 'Paper Passes!',
+                onTap: () {
+                  Get.toNamed(AppRoutes.paperPass);
+                },
+              ))
+            ],
+          )
+        ],
       ),
     );
   }

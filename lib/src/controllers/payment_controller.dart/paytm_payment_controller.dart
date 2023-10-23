@@ -17,8 +17,10 @@ class PaytmController extends GetxController {
 
   Future<void> generateChecksum(
       {required int passId, required int amount}) async {
+    EasyLoading.show();
     final failureOrSuccess =
         await _service.generateChecksum(passId: passId, amount: amount);
+    EasyLoading.dismiss();
     failureOrSuccess.fold((l) {
       debugPrint("Failure In GenerateChecksum $l");
       EasyLoading.showError('An Error Occured!');
