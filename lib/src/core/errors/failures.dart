@@ -11,4 +11,9 @@ class ServerFailure extends Failure with EquatableMixin {
 
   @override
   List<Object?> get props => [message];
+
+  @override
+  String toString() {
+    return message;
+  }
 }

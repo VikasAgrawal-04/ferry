@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/src/controllers/api_controller/route_controller.dart';
-import 'package:goa/src/controllers/payment_controller.dart/paytm_payment.dart';
+import 'package:goa/src/controllers/payment_controller.dart/paytm_payment_controller.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PassScreen extends StatefulWidget {

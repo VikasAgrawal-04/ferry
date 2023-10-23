@@ -30,4 +30,16 @@ class PaytmService {
       return Left(ServerFailure(message: error.message.toString()));
     }
   }
+
+  Future<Either<Failure, Map<String, dynamic>>> verifyTransaction(
+      String qrId) async {
+    try {
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.paytmCallback,
+          data: {'qrCodeId': qrId});
+      return Right(response ?? {});
+    } on ServerException catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
 }

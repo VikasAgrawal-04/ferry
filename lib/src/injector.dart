@@ -4,7 +4,7 @@ import 'package:goa/src/controllers/api_controller/auth_controller.dart';
 import 'package:goa/src/controllers/api_controller/general_controller.dart';
 import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:goa/src/controllers/network/network_controller.dart';
-import 'package:goa/src/controllers/payment_controller.dart/paytm_payment.dart';
+import 'package:goa/src/controllers/payment_controller.dart/paytm_payment_controller.dart';
 import 'package:goa/src/core/utils/constants/api_endpoints.dart';
 import 'package:goa/src/core/utils/environment.dart';
 

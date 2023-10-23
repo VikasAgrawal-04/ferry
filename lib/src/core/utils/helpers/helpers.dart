@@ -4,10 +4,13 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:goa/src/core/errors/exception.dart';
 import 'package:goa/src/core/errors/failures.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum RequestType { get, post, delete }
@@ -160,6 +163,7 @@ class Helpers {
           "$path response status code ${response.statusCode} message is ${response.statusMessage}");
 
       if (response.statusCode == 200) {
+        print(response.data.runtimeType);
         return response.data as Map<String, dynamic>;
       } else if (response.statusCode == 400 || response.statusCode == 202) {
         logger.e(
@@ -189,6 +193,35 @@ class Helpers {
       }
     }
     return null;
+  }
+
+  static Future<void> downloadQrImage(qrImg) async {
+    // Check for permissions
+    if (await Permission.storage.request().isGranted) {
+      // Get the path to the downloads folder
+      final directory;
+      if (Platform.isAndroid) {
+        directory = Directory('/storage/emulated/0/Download');
+      } else {
+        directory = await getDownloadsDirectory();
+      }
+
+      // Create a file in the downloads folder
+      final file = await File('${directory?.path}/qr-code.png').create();
+
+      // Write the base64 image to the file
+      await file.writeAsBytes(
+          Uint8List.fromList(base64Decode(qrImg.split(',').last)));
+
+      // Show a snackbar to the user
+      EasyLoading.showSuccess(
+          'QR image downloaded successfully! \n Please Check Your Downloads For The QR');
+    } else {
+      // Show a snackbar to the user
+      EasyLoading.showError(
+          'Storage permission is required to download the QR image.');
+      openAppSettings();
+    }
   }
 
   static String convertFailureToMessage(Failure failure) {

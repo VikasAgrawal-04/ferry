@@ -27,7 +27,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   device_info_plus: ^9.0.3
   responsive_sizer: ^3.2.0
-  syncfusion_flutter_barcodes: ^22.2.10
+  syncfusion_flutter_barcodes: ^23.1.41
   flutter_html: ^3.0.0-beta.2
   ai_barcode_scanner: ^0.0.7
   sqflite: ^2.3.0

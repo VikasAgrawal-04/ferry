@@ -53,8 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<bool> _checkPermission() async {
     if (platform == TargetPlatform.android) {
       final status = await Permission.storage.status;
+      print("statusstatusstatus$status");
       if (status != PermissionStatus.granted) {
         final result = await Permission.storage.request();
+        print("result$result");
         final result1 = await Permission.manageExternalStorage.request();
         if (result == PermissionStatus.granted &&
             result1 == PermissionStatus.granted) {
