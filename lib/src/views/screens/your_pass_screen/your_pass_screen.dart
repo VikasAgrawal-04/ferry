@@ -123,15 +123,14 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                           Positioned(
                                               left: 5.w,
                                               top: 1.5.h,
-                                              child: Text(
-                                                  routeController
-                                                      .onlyYourPasses[
-                                                          _selectedPass.value]
-                                                      .vehicletype,
-                                                  style: theme.bodyLarge
-                                                      ?.copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w600)))
+                                              child: Icon(routeController
+                                                          .onlyYourPasses[
+                                                              _selectedPass
+                                                                  .value]
+                                                          .vehicletype ==
+                                                      '2'
+                                                  ? Icons.two_wheeler
+                                                  : Icons.directions_car,size: 25.sp,))
                                         ],
                                       ),
                                       SizedBox(
