@@ -23,69 +23,71 @@ class _ContactUsState extends State<ContactUs> {
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: true,
         body: Obx(
-          () => Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 5.h),
-              Image.asset("assets/images/4.PNG"),
-              Center(
-                child: Text(
-                  "Contact Us",
-                  style: theme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+          () => SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 5.h),
+                Image.asset("assets/images/4.PNG"),
+                Center(
+                  child: Text(
+                    "Contact Us",
+                    style: theme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+                  ),
                 ),
-              ),
-              SizedBox(height: 1.h),
-              contact(
-                  "assets/images/call.svg",
-                  Text(
-                    generalController.contactInfo.first.mobile,
-                    style:
-                        theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
-                  )),
-              contact(
-                  "assets/images/email.svg",
-                  Text(
-                    generalController.contactInfo.first.email,
-                    style:
-                        theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
-                  )),
-              contact(
-                  "assets/images/facebook.svg",
-                  Text(
-                    generalController.contactInfo.first.facebook,
-                    style:
-                        theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
-                  )),
-              contact(
-                  "assets/images/phone.svg",
-                  Text(
-                    generalController.contactInfo.first.landline,
-                    style:
-                        theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
-                  )),
-              contact(
-                  "assets/images/twitter.svg",
-                  Text(
-                    generalController.contactInfo.first.twitter,
-                    style:
-                        theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
-                  )),
-              contact(
-                  "assets/images/web.svg",
-                  Text(
-                    generalController.contactInfo.first.website,
-                    style:
-                        theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
-                  )),
-              contact(
-                  "assets/images/instagram.svg",
-                  Text(
-                    generalController.contactInfo.first.instagram,
-                    style:
-                        theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
-                  )),
-            ],
+                SizedBox(height: 1.h),
+                contact(
+                    "assets/images/call.svg",
+                    Text(
+                      generalController.contactInfo.first.mobile,
+                      style:
+                          theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
+                    )),
+                contact(
+                    "assets/images/email.svg",
+                    Text(
+                      generalController.contactInfo.first.email,
+                      style:
+                          theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
+                    )),
+                contact(
+                    "assets/images/facebook.svg",
+                    Text(
+                      generalController.contactInfo.first.facebook,
+                      style:
+                          theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
+                    )),
+                contact(
+                    "assets/images/phone.svg",
+                    Text(
+                      generalController.contactInfo.first.landline,
+                      style:
+                          theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
+                    )),
+                contact(
+                    "assets/images/twitter.svg",
+                    Text(
+                      generalController.contactInfo.first.twitter,
+                      style:
+                          theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
+                    )),
+                contact(
+                    "assets/images/web.svg",
+                    Text(
+                      generalController.contactInfo.first.website,
+                      style:
+                          theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
+                    )),
+                contact(
+                    "assets/images/instagram.svg",
+                    Text(
+                      generalController.contactInfo.first.instagram,
+                      style:
+                          theme.bodySmall?.copyWith(fontWeight: FontWeight.w500),
+                    )),
+              ],
+            ),
           ),
         ));
   }
@@ -100,7 +102,7 @@ class _ContactUsState extends State<ContactUs> {
             height: 4.h,
           ),
           SizedBox(width: 20.w),
-          title
+          Expanded(child: title)
         ],
       ),
     );

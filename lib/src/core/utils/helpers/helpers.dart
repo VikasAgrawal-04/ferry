@@ -207,7 +207,7 @@ class Helpers {
       }
 
       // Create a file in the downloads folder
-      final file = await File('${directory?.path}/qr-code.png').create();
+      final file = await File('${directory?.path}/qr-code${DateTime.now().toIso8601String()}.png').create();
 
       // Write the base64 image to the file
       await file.writeAsBytes(

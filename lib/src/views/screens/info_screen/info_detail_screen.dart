@@ -14,6 +14,7 @@ class _InfoDetailScreenState extends State<InfoDetailScreen> {
   final AppInfoDatum data = Get.arguments;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Html(data: data.description));
+    return SafeArea(
+        child: SingleChildScrollView(child: Html(data: data.description)));
   }
 }
