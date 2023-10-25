@@ -258,6 +258,29 @@ class Helpers {
     );
   }
 
+  static String subtractVersion(String version1, String version2) {
+    List<int> v1Parts = version1.split('.').map(int.parse).toList();
+    List<int> v2Parts = version2.split('.').map(int.parse).toList();
+
+    int majorDiff = v1Parts[0] - v2Parts[0];
+    int minorDiff = v1Parts[1] - v2Parts[1];
+    int patchDiff = v1Parts[2] - v2Parts[2];
+
+    String result = '$majorDiff.$minorDiff.$patchDiff';
+    return result;
+  }
+
+  static bool isVersionGreater(String version1, String version2) {
+    List<int> v1Parts = version1.split('.').map(int.parse).toList();
+    List<int> v2Parts = version2.split('.').map(int.parse).toList();
+
+    if (v1Parts[1] >= v2Parts[1]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   static String formattedDate(DateTime date) {
     final formattedDate = DateFormat('dd MMM yyyy').format(date);
     return formattedDate;

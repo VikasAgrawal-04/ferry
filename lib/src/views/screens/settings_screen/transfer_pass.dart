@@ -14,6 +14,15 @@ class TransferPass extends StatefulWidget {
 
 class _TransferPassState extends State<TransferPass> {
   final routeController = Get.find<RouteController>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await routeController.getYourPasses();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     TextTheme theme = Theme.of(context).textTheme;
@@ -95,6 +104,11 @@ class _TransferPassState extends State<TransferPass> {
                               Text(data.passname,
                                   style: theme.bodyMedium
                                       ?.copyWith(fontWeight: FontWeight.w600)),
+                              SizedBox(height: .5.h),
+                              Text(data.passcode,
+                                  style: theme.bodyMedium
+                                      ?.copyWith(fontWeight: FontWeight.w600)),
+                              SizedBox(height: .5.h),
                               if (data.transfers!.isNotEmpty) ...{
                                 Text(
                                     "Transfer Code : ${data.transfers?.first.transfercode}")

@@ -171,20 +171,24 @@ class RouteController extends GetxController {
   }
 
   Future<void> checkPaperPass({required String paperPass}) async {
-    EasyLoading.show();
     if (network.isOnline) {
-      final failureOrSuccess =
-          await _service.checkPaperPass(paperPass: paperPass);
-      failureOrSuccess.fold((l) => debugPrint("Failure In Check Paper Pass"),
-          (r) async {
-        if (r['success']) {
-          EasyLoading.showSuccess(r['message']);
-          await downloadPasses();
-          Get.offAllNamed(AppRoutes.dashboard);
-        } else {
-          EasyLoading.showError(r['message']);
-        }
-      });
+      EasyLoading.show();
+      if (network.isOnline) {
+        final failureOrSuccess =
+            await _service.checkPaperPass(paperPass: paperPass);
+        failureOrSuccess.fold((l) => debugPrint("Failure In Check Paper Pass"),
+            (r) async {
+          if (r['success']) {
+            EasyLoading.showSuccess(r['message']);
+            await downloadPasses();
+            Get.offAllNamed(AppRoutes.dashboard);
+          } else {
+            EasyLoading.showError(r['message']);
+          }
+        });
+      }
+    } else {
+      EasyLoading.showInfo("Your Are OFFLINE!");
     }
   }
 
