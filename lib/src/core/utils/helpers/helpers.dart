@@ -206,8 +206,11 @@ class Helpers {
         directory = await getDownloadsDirectory();
       }
 
-      // Create a file in the downloads folder
-      final file = await File('${directory?.path}/qr-code${DateTime.now().toIso8601String()}.png').create();
+      // Create a file in the downloads folder and if exists delete it.
+      if (File('${directory?.path}/qr-code.png').existsSync()) {
+        File('${directory?.path}/qr-code.png').deleteSync();
+      }
+      final file = await File('${directory?.path}/qr-code.png').create();
 
       // Write the base64 image to the file
       await file.writeAsBytes(

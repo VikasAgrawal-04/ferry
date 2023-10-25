@@ -101,7 +101,7 @@ class _ContactUsState extends State<ContactUs> {
             asset,
             height: 4.h,
           ),
-          SizedBox(width: 20.w),
+          SizedBox(width: 16.w),
           Expanded(child: title)
         ],
       ),
