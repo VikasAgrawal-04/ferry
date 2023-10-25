@@ -21,18 +21,12 @@ class _VehicleScreenState extends State<VehicleScreen> {
     EasyLoading.dismiss();
     TextTheme theme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(9.h),
-        child: AppBar(
-          title:
-              Text('Buy Pass : ${data.routename}', style: theme.displayMedium),
-          flexibleSpace: Padding(
-              padding: EdgeInsets.only(top: 8.5.h),
-              child: const Text(
-                "Select Vehicle Type",
-                textAlign: TextAlign.center,
-              )),
-        ),
+      appBar: AppBar(
+        title: Column(children: [
+          Text('Buy Pass : ${data.routename}', style: theme.displayMedium),
+          Text("Select Vehicle Type",
+              textAlign: TextAlign.center, style: theme.bodySmall)
+        ]),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 4.w),

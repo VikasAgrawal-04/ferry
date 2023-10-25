@@ -9,7 +9,6 @@ import 'package:goa/src/controllers/api_controller/auth_controller.dart';
 import 'package:goa/src/core/utils/constants/keys.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../../core/utils/helpers/helpers.dart';
@@ -38,7 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       platform = TargetPlatform.iOS;
     }
-    _checkPermission();
     fetchDeviceInfo();
   }
 
@@ -48,27 +46,6 @@ class _LoginScreenState extends State<LoginScreen> {
       deviceLocalId.value = deviceInformation.data['id'];
       await Helpers.setString(key: Keys.deviceId, value: deviceLocalId.value);
     } else if (Platform.isIOS) {}
-  }
-
-  Future<bool> _checkPermission() async {
-    if (platform == TargetPlatform.android) {
-      final status = await Permission.storage.status;
-      print("statusstatusstatus$status");
-      if (status != PermissionStatus.granted) {
-        final result = await Permission.storage.request();
-        print("result$result");
-        final result1 = await Permission.manageExternalStorage.request();
-        if (result == PermissionStatus.granted &&
-            result1 == PermissionStatus.granted) {
-          return true;
-        }
-      } else {
-        return true;
-      }
-    } else {
-      return true;
-    }
-    return false;
   }
 
   @override
