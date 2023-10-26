@@ -59,7 +59,7 @@ class _DashBoardState extends State<DashBoard> {
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
           selectedItemColor: Colors.blue,
-          iconSize: 30,
+          iconSize: 21.5.sp,
           selectedIconTheme: const IconThemeData(color: Colors.black87),
           unselectedItemColor: Colors.black54,
           currentIndex: _selectedIndex.value,

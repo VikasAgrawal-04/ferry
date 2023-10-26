@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -196,34 +197,53 @@ class Helpers {
   }
 
   static Future<void> downloadQrImage(qrImg) async {
-    // Check for permissions
-    if (await Permission.storage.request().isGranted) {
-      // Get the path to the downloads folder
-      final directory;
-      if (Platform.isAndroid) {
-        directory = Directory('/storage/emulated/0/Download');
-      } else {
-        directory = await getDownloadsDirectory();
-      }
-
-      // Create a file in the downloads folder and if exists delete it.
-      if (File('${directory?.path}/qr-code.png').existsSync()) {
-        File('${directory?.path}/qr-code.png').deleteSync();
-      }
-      final file = await File('${directory?.path}/qr-code.png').create();
-
-      // Write the base64 image to the file
-      await file.writeAsBytes(
-          Uint8List.fromList(base64Decode(qrImg.split(',').last)));
-
-      // Show a snackbar to the user
-      EasyLoading.showSuccess(
-          'QR image downloaded successfully! \n Please Check Your Downloads For The QR');
+    final deviceInfo = await DeviceInfoPlugin().androidInfo;
+    final directory;
+    if (Platform.isAndroid) {
+      directory = Directory('/storage/emulated/0/Download');
     } else {
-      // Show a snackbar to the user
-      EasyLoading.showError(
-          'Storage permission is required to download the QR image.');
-      openAppSettings();
+      directory = await getDownloadsDirectory();
+    }
+
+    // Check for permissions
+    if (deviceInfo.version.sdkInt > 32) {
+      if (await Permission.photos.isGranted) {
+        if (File('${directory?.path}/qr-code.png').existsSync()) {
+          File('${directory?.path}/qr-code.png').deleteSync();
+        }
+        final file = await File('${directory?.path}/qr-code.png').create();
+
+        // Write the base64 image to the file
+        await file.writeAsBytes(
+            Uint8List.fromList(base64Decode(qrImg.split(',').last)));
+
+        // Show a snackbar to the user
+        EasyLoading.showSuccess(
+            'QR image downloaded successfully! \n Please Check Your Downloads For The QR');
+      } else {
+        EasyLoading.showError(
+            'Storage permission is required to download the QR image.');
+        await Permission.photos.request();
+      }
+    } else if (deviceInfo.version.sdkInt < 32) {
+      if (await Permission.storage.request().isGranted) {
+        if (File('${directory?.path}/qr-code.png').existsSync()) {
+          File('${directory?.path}/qr-code.png').deleteSync();
+        }
+        final file = await File('${directory?.path}/qr-code.png').create();
+
+        // Write the base64 image to the file
+        await file.writeAsBytes(
+            Uint8List.fromList(base64Decode(qrImg.split(',').last)));
+
+        // Show a snackbar to the user
+        EasyLoading.showSuccess(
+            'QR image downloaded successfully! \n Please Check Your Downloads For The QR');
+      } else {
+        EasyLoading.showError(
+            'Storage permission is required to download the QR image.');
+        await Permission.storage.request();
+      }
     }
   }
 
