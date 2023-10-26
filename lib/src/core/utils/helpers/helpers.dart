@@ -206,7 +206,7 @@ class Helpers {
     }
 
     // Check for permissions
-    if (deviceInfo.version.sdkInt > 32) {
+    if (Platform.isAndroid && deviceInfo.version.sdkInt > 32) {
       if (await Permission.photos.isGranted) {
         if (File('${directory?.path}/qr-code.png').existsSync()) {
           File('${directory?.path}/qr-code.png').deleteSync();
@@ -225,7 +225,7 @@ class Helpers {
             'Storage permission is required to download the QR image.');
         await Permission.photos.request();
       }
-    } else if (deviceInfo.version.sdkInt < 32) {
+    } else if (Platform.isAndroid && deviceInfo.version.sdkInt < 32) {
       if (await Permission.storage.request().isGranted) {
         if (File('${directory?.path}/qr-code.png').existsSync()) {
           File('${directory?.path}/qr-code.png').deleteSync();
