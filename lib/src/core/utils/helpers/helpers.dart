@@ -196,7 +196,7 @@ class Helpers {
     return null;
   }
 
-  static Future<void> downloadQrImage(qrImg) async {
+  static Future<void> downloadQrImage(qrImg, String amount) async {
     final deviceInfo = await DeviceInfoPlugin().androidInfo;
     final directory;
     if (Platform.isAndroid) {
@@ -208,10 +208,9 @@ class Helpers {
     // Check for permissions
     if (Platform.isAndroid && deviceInfo.version.sdkInt > 32) {
       if (await Permission.photos.isGranted) {
-        if (File('${directory?.path}/qr-code.png').existsSync()) {
-          File('${directory?.path}/qr-code.png').deleteSync();
-        }
-        final file = await File('${directory?.path}/qr-code.png').create();
+        final file = await File(
+                '${directory?.path}/₹$amount&time=${formatDateTime(DateTime.now())}.png')
+            .create();
 
         // Write the base64 image to the file
         await file.writeAsBytes(
@@ -227,10 +226,9 @@ class Helpers {
       }
     } else if (Platform.isAndroid && deviceInfo.version.sdkInt < 32) {
       if (await Permission.storage.request().isGranted) {
-        if (File('${directory?.path}/qr-code.png').existsSync()) {
-          File('${directory?.path}/qr-code.png').deleteSync();
-        }
-        final file = await File('${directory?.path}/qr-code.png').create();
+        final file = await File(
+                '${directory?.path}/₹$amount&time=${formatDateTime(DateTime.now())}.png')
+            .create();
 
         // Write the base64 image to the file
         await file.writeAsBytes(
@@ -312,6 +310,11 @@ class Helpers {
   static String formatTimeDate(DateTime date) {
     final formattedDate = DateFormat('dd MMM yyyy HH:mm:ss').format(date);
     return formattedDate;
+  }
+
+  static String formatDateTime(DateTime now) {
+    DateFormat formatter = DateFormat("dd-MM-yy_HH_mm_ss");
+    return formatter.format(now);
   }
 }
 

@@ -38,7 +38,7 @@ class _QrScreenState extends State<QrScreen> {
         actions: [
           IconButton(
               onPressed: () async {
-                await Helpers.downloadQrImage(qrImg);
+                await Helpers.downloadQrImage(qrImg, data['amount']);
               },
               icon: const Icon(Icons.download))
         ],
