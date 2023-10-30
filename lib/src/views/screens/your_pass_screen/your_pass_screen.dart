@@ -64,7 +64,6 @@ class _YourPassScreenState extends State<YourPassScreen> {
         leading: IconButton(
             onPressed: () async {
               await routeController.downloadPasses();
-              await routeController.getYourPasses();
             },
             icon: const Icon(Icons.refresh)),
         actions: [
@@ -137,7 +136,23 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                                           .vehicletype ==
                                                       '2'
                                                   ? Icons.two_wheeler
-                                                  : Icons.directions_car,
+                                                  : routeController
+                                                              .onlyYourPasses[
+                                                                  _selectedPass
+                                                                      .value]
+                                                              .vehicletype ==
+                                                          '4'
+                                                      ? Icons.directions_car
+                                                      : routeController
+                                                                  .onlyYourPasses[
+                                                                      _selectedPass
+                                                                          .value]
+                                                                  .vehicletype ==
+                                                              '6'
+                                                          ? Icons
+                                                              .airport_shuttle
+                                                          : Icons
+                                                              .directions_bus,
                                               size: 25.sp,
                                             ))
                                       ],
@@ -210,19 +225,21 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                                             : AppColors
                                                                 .txtPrimary),
                                                 textAlign: TextAlign.center),
-                                            data.vehicletype == "2"
-                                                ? Icon(Icons.two_wheeler,
-                                                    color: _selectedPass
-                                                                .value ==
-                                                            index
+                                            Icon(
+                                                data.vehicletype == '2'
+                                                    ? Icons.two_wheeler
+                                                    : data.vehicletype == '4'
+                                                        ? Icons.directions_car
+                                                        : data.vehicletype ==
+                                                                '6'
+                                                            ? Icons
+                                                                .airport_shuttle
+                                                            : Icons
+                                                                .directions_bus,
+                                                color:
+                                                    _selectedPass.value == index
                                                         ? AppColors.textWhite
                                                         : AppColors.txtPrimary)
-                                                : Icon(Icons.directions_car,
-                                                    color: _selectedPass
-                                                                .value ==
-                                                            index
-                                                        ? AppColors.textWhite
-                                                        : AppColors.txtPrimary),
                                           ],
                                         ),
                                       ),

@@ -37,8 +37,9 @@ class RouteController extends GetxController {
       successOrFailure.fold((l) => debugPrint("Error In Get Your Passes $l"),
           (r) async {
         if (r.success) {
-          database.deletePasses();
-          database.insertPasses(r.data);
+          await database.deletePasses();
+          await database.insertPasses(r.data);
+          await getYourPasses();
         }
       });
     }

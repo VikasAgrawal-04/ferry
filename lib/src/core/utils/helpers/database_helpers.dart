@@ -88,11 +88,9 @@ class DatabaseHelper {
           print("Insertions in transfers $trasnfers");
           if (trasnfers != null && trasnfers.isNotEmpty) {
             for (final transfer in trasnfers) {
-              print("Inserted INserted");
               print(transfer.toJson());
               await database?.insert('Transfers', transfer.toJson(),
                   conflictAlgorithm: ConflictAlgorithm.replace);
-              print("Data Inserted ${await database?.query('Transfers')}");
             }
           }
           rawData.remove('transfers');

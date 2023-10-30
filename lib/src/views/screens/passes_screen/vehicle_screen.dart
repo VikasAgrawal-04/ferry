@@ -33,19 +33,49 @@ class _VehicleScreenState extends State<VehicleScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              vehicle(
-                  name: '4 Wheeler',
-                  img: 'assets/images/4_wheeler.PNG',
-                  onTap: () async {
-                    await api(routeId: data.routeid, vehicleType: "4");
-                  }),
-              SizedBox(height: 4.h),
-              vehicle(
-                  name: '2 Wheeler',
-                  img: 'assets/images/2_wheeler.PNG',
-                  onTap: () async {
-                    await api(routeId: data.routeid, vehicleType: "2");
-                  })
+              Row(
+                children: [
+                  Expanded(
+                    child: vehicle(
+                        name: '4 Wheeler',
+                        img: 'assets/images/4_wheeler.PNG',
+                        onTap: () async {
+                          await api(routeId: data.routeid, vehicleType: "4");
+                        }),
+                  ),
+                  SizedBox(width: 4.w),
+                  Expanded(
+                    child: vehicle(
+                        name: '2 Wheeler',
+                        img: 'assets/images/2_wheeler.PNG',
+                        onTap: () async {
+                          await api(routeId: data.routeid, vehicleType: "2");
+                        }),
+                  )
+                ],
+              ),
+              SizedBox(height: 2.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: vehicle(
+                        name: 'Medium Vehicle',
+                        img: 'assets/images/Medium.PNG',
+                        onTap: () async {
+                          await api(routeId: data.routeid, vehicleType: "6");
+                        }),
+                  ),
+                  SizedBox(width: 4.w),
+                  Expanded(
+                    child: vehicle(
+                        name: 'Heavy Vehicle',
+                        img: 'assets/images/heavy.PNG',
+                        onTap: () async {
+                          await api(routeId: data.routeid, vehicleType: "8");
+                        }),
+                  )
+                ],
+              )
             ],
           ),
         ),
@@ -57,8 +87,13 @@ class _VehicleScreenState extends State<VehicleScreen> {
     bool result = await routeController.getRoutePasses(
         routeId: routeId, vehicleType: vehicleType);
     if (result) {
+      final type = vehicleType == '6'
+          ? 'Medium'
+          : vehicleType == '8'
+              ? 'Heavy'
+              : "$vehicleType Wheeler";
       Get.toNamed(AppRoutes.passDetails,
-          arguments: "${data.routename} : $vehicleType Wheeler");
+          arguments: "${data.routename} : $type");
     }
   }
 
@@ -79,7 +114,7 @@ class _VehicleScreenState extends State<VehicleScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: 32.h,
+              height: 20.h,
               child: Image.asset(
                 img,
                 frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
