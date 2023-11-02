@@ -29,7 +29,6 @@ class RouteController extends GetxController {
   final yourPasses = <YourPassDatum>[].obs;
   final onlyYourPasses = <YourPassDatum>[].obs;
   final passesHistory = <PurchaseDatum>[].obs;
-  final passesImg = ['assets/images/6.PNG', 'assets/images/9.PNG'];
 
   Future<void> downloadPasses() async {
     if (network.isOnline) {
