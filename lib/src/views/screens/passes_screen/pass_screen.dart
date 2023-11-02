@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goa/src/controllers/api_controller/route_controller.dart';
 import 'package:goa/src/controllers/payment_controller.dart/paytm_payment_controller.dart';
+import 'package:goa/src/core/utils/helpers/helpers.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PassScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _PassScreenState extends State<PassScreen> {
           child: Column(
             children: List.generate(routeController.passes.length, (index) {
               final data = routeController.passes[index];
-              final img = routeController.passesImg[index];
+              final img = routeController.passes[index].passimg;
               return pass(
                   name: data.passname,
                   img: img,
@@ -53,6 +54,7 @@ class _PassScreenState extends State<PassScreen> {
     return InkWell(
       onTap: onTap,
       child: Container(
+        width: 100.w,
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.2),
@@ -66,18 +68,7 @@ class _PassScreenState extends State<PassScreen> {
           children: [
             SizedBox(
               height: 40.h,
-              child: Image.asset(
-                img,
-                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                  if (wasSynchronouslyLoaded) return child;
-                  return AnimatedOpacity(
-                    opacity: frame == null ? 0 : 1,
-                    duration: const Duration(seconds: 2),
-                    curve: Curves.easeOut,
-                    child: child,
-                  );
-                },
-              ),
+              child: Helpers.imgFromBase64(img),
             ),
             SizedBox(height: 1.h),
             Text(name, textAlign: TextAlign.center)

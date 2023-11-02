@@ -43,7 +43,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
   }
 
   void startBlinking() {
-    Timer.periodic(const Duration(milliseconds: 600), (timer) {
+    Timer.periodic(const Duration(milliseconds: 300), (timer) {
       animationValue.value = animationValue.value == 1.0 ? 0.0 : 1.0;
     });
   }
@@ -153,7 +153,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                                               .airport_shuttle
                                                           : Icons
                                                               .directions_bus,
-                                              size: 25.sp,
+                                              size: 30.sp,
                                             ))
                                       ],
                                     ),
@@ -217,6 +217,8 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                             Text(data.routename,
                                                 style: theme.bodyMedium
                                                     ?.copyWith(
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 19.sp,
                                                         color: _selectedPass
                                                                     .value ==
                                                                 index
