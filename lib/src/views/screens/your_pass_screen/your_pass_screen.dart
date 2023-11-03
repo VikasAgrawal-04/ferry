@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/api_controller/route_controller.dart';
@@ -73,8 +74,8 @@ class _YourPassScreenState extends State<YourPassScreen> {
                 child: AnimatedContainer(
                   margin: EdgeInsets.only(right: 4.w),
                   duration: const Duration(milliseconds: 400),
-                  width: 4.w,
-                  height: 1.5.h,
+                  width: 10.w,
+                  height: 2.5.h,
                   decoration: BoxDecoration(
                     color: AppColors.greenBg,
                     shape: BoxShape.circle,
@@ -98,7 +99,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
                     : Column(
                         children: [
                           SizedBox(
-                            height: 60.h,
+                            height: 58.h,
                             width: 100.w,
                             child: Obx(
                               () => WhiteBoxCard(
@@ -112,13 +113,14 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                               .onlyYourPasses[
                                                   _selectedPass.value]
                                               .routename,
-                                          style: theme.bodyMedium,
+                                          style: theme.displayLarge,
                                           textAlign: TextAlign.center),
                                     ),
                                     Stack(
                                       children: [
                                         SizedBox(
-                                          height: 35.5.h,
+                                          width: 100.w,
+                                          height: 32.h,
                                           child: Helpers.imgFromBase64(
                                               routeController
                                                   .onlyYourPasses[
@@ -127,33 +129,52 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                         ),
                                         Positioned(
                                             left: 5.w,
-                                            top: 1.5.h,
-                                            child: Icon(
-                                              routeController
-                                                          .onlyYourPasses[
-                                                              _selectedPass
-                                                                  .value]
-                                                          .vehicletype ==
-                                                      '2'
-                                                  ? Icons.two_wheeler
-                                                  : routeController
-                                                              .onlyYourPasses[
-                                                                  _selectedPass
-                                                                      .value]
-                                                              .vehicletype ==
-                                                          '4'
-                                                      ? Icons.directions_car
-                                                      : routeController
-                                                                  .onlyYourPasses[
-                                                                      _selectedPass
-                                                                          .value]
-                                                                  .vehicletype ==
-                                                              '6'
-                                                          ? Icons
-                                                              .airport_shuttle
-                                                          : Icons
-                                                              .directions_bus,
-                                              size: 30.sp,
+                                            top: -2.5.h,
+                                            child: Container(
+                                              height: 10.h,
+                                              width: 20.w,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 2.w,
+                                                  vertical: 0.5.h),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.2),
+                                                      spreadRadius: 2,
+                                                      blurRadius: 5,
+                                                      offset:
+                                                          const Offset(0, 3),
+                                                    ),
+                                                  ]),
+                                              child: SvgPicture.asset(
+                                                routeController
+                                                            .onlyYourPasses[
+                                                                _selectedPass
+                                                                    .value]
+                                                            .vehicletype ==
+                                                        '2'
+                                                    ? 'assets/images/2 wheeler white-02.svg'
+                                                    : routeController
+                                                                .onlyYourPasses[
+                                                                    _selectedPass
+                                                                        .value]
+                                                                .vehicletype ==
+                                                            '4'
+                                                        ? 'assets/images/four wheeler white.svg'
+                                                        : routeController
+                                                                    .onlyYourPasses[
+                                                                        _selectedPass
+                                                                            .value]
+                                                                    .vehicletype ==
+                                                                '6'
+                                                            ? 'assets/images/medium white.svg'
+                                                            : 'assets/images/heavy veh-white.svg',
+                                                color: Colors.black,
+                                              ),
                                             ))
                                       ],
                                     ),
@@ -171,14 +192,15 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                       alignment: Alignment.center,
                                       child: Text(
                                         "Valid Till : ${Helpers.formattedDate(routeController.onlyYourPasses[_selectedPass.value].validTillDate)}",
-                                        style: theme.bodyMedium,
+                                        style: theme.bodyMedium?.copyWith(
+                                            fontWeight: FontWeight.w600),
                                       ),
                                     ),
                                   ]),
                             ),
                           ),
                           SizedBox(
-                            height: 10.h,
+                            height: 12.h,
                             child: ListView.builder(
                                 itemCount:
                                     routeController.onlyYourPasses.length,
@@ -217,8 +239,9 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                             Text(data.routename,
                                                 style: theme.bodyMedium
                                                     ?.copyWith(
-                                                      fontWeight: FontWeight.w600,
-                                                      fontSize: 19.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 19.sp,
                                                         color: _selectedPass
                                                                     .value ==
                                                                 index
@@ -227,21 +250,35 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                                             : AppColors
                                                                 .txtPrimary),
                                                 textAlign: TextAlign.center),
-                                            Icon(
-                                                data.vehicletype == '2'
-                                                    ? Icons.two_wheeler
-                                                    : data.vehicletype == '4'
-                                                        ? Icons.directions_car
-                                                        : data.vehicletype ==
+                                            SizedBox(
+                                              height: 4.5.h,
+                                              width: 14.w,
+                                              child: SvgPicture.asset(
+                                                routeController
+                                                            .onlyYourPasses[
+                                                                index]
+                                                            .vehicletype ==
+                                                        '2'
+                                                    ? 'assets/images/2 wheeler white-02.svg'
+                                                    : routeController
+                                                                .onlyYourPasses[
+                                                                   index]
+                                                                .vehicletype ==
+                                                            '4'
+                                                        ? 'assets/images/four wheeler white.svg'
+                                                        : routeController
+                                                                    .onlyYourPasses[
+                                                                        index]
+                                                                    .vehicletype ==
                                                                 '6'
-                                                            ? Icons
-                                                                .airport_shuttle
-                                                            : Icons
-                                                                .directions_bus,
+                                                            ? 'assets/images/medium white.svg'
+                                                            : 'assets/images/heavy veh-white.svg',
                                                 color:
                                                     _selectedPass.value == index
                                                         ? AppColors.textWhite
-                                                        : AppColors.txtPrimary)
+                                                        : AppColors.txtPrimary,
+                                              ),
+                                            )
                                           ],
                                         ),
                                       ),
