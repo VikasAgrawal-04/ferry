@@ -10,7 +10,6 @@ import 'package:goa/src/core/utils/constants/keys.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../../../core/utils/helpers/helpers.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -45,7 +44,11 @@ class _LoginScreenState extends State<LoginScreen> {
       final deviceInformation = await deviceInfo.deviceInfo;
       deviceLocalId.value = deviceInformation.data['id'];
       await Helpers.setString(key: Keys.deviceId, value: deviceLocalId.value);
-    } else if (Platform.isIOS) {}
+    } else if (Platform.isIOS) {
+      final deviceInformation = await deviceInfo.iosInfo;
+      deviceLocalId.value = deviceInformation.identifierForVendor ?? '123123';
+      await Helpers.setString(key: Keys.deviceId, value: deviceLocalId.value);
+    }
   }
 
   @override
