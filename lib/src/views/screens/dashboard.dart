@@ -7,7 +7,6 @@ import 'package:goa/src/views/screens/info_screen/info_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
 import 'package:goa/src/views/screens/settings_screen/setting_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import 'your_pass_screen/your_pass_screen.dart';
 
 class DashBoard extends StatefulWidget {
