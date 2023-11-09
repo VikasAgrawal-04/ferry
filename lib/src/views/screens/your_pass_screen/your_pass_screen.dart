@@ -87,7 +87,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
       body: Column(
         children: [
           Obx(() => SizedBox(
-                height: 70.h,
+                height: 65.h,
                 child: routeController.onlyYourPasses.isEmpty
                     ? Center(
                         child: Text(
@@ -262,7 +262,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                                     ? 'assets/images/2 wheeler white-02.svg'
                                                     : routeController
                                                                 .onlyYourPasses[
-                                                                   index]
+                                                                    index]
                                                                 .vehicletype ==
                                                             '4'
                                                         ? 'assets/images/four wheeler white.svg'
