@@ -25,6 +25,7 @@ class EndPoints {
   //General
   static const String appInfo = 'get_all_app_information.php';
   static const String contactInfo = 'get_contact_info.php';
+  static const String deleteAccount = 'delete-account';
 
   //Payment
   static const String createChecksum = 'order';

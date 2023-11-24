@@ -42,4 +42,16 @@ class PaytmService {
       return Left(ServerFailure(message: error.message.toString()));
     }
   }
+
+  Future<Either<Failure, Map<String, dynamic>>> deleteAccount() async {
+    try {
+      final userId = Helpers.getString(key: Keys.userId);
+      final response = await Helpers.sendRequest(
+          dio, RequestType.post, EndPoints.deleteAccount,
+          queryParams: {'userid': userId});
+      return Right(response ?? {});
+    } on ServerFailure catch (error) {
+      return Left(ServerFailure(message: error.message.toString()));
+    }
+  }
 }

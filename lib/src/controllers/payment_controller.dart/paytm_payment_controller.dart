@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:goa/services/payment_services/paytm_service.dart';
 import 'package:goa/services/routing_services/routes.dart';
 import 'package:goa/src/controllers/api_controller/route_controller.dart';
+import 'package:goa/src/controllers/network/network_controller.dart';
 import 'package:goa/src/core/utils/environment.dart';
+import 'package:goa/src/core/utils/helpers/database_helpers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PaytmController extends GetxController {
   final Dio dio;
@@ -14,6 +17,7 @@ class PaytmController extends GetxController {
 
   final String mId = Environment.mid;
   final passController = Get.find<RouteController>();
+  final network = Get.find<NetworkController>();
 
   Future<void> generateChecksum(
       {required int passId, required int amount}) async {
@@ -45,5 +49,21 @@ class PaytmController extends GetxController {
       Get.offAllNamed(AppRoutes.dashboard);
       debugPrint("Success In VerifyTransaction $r");
     });
+  }
+
+  Future<void> deleteAccount() async {
+    if (network.isOnline) {
+      final failureOrSuccess = await _service.deleteAccount();
+      failureOrSuccess.fold((l) => debugPrint("Failure In deleteAccount $l"),
+          (r) async {
+        SharedPreferences sharedPreferences =
+            await SharedPreferences.getInstance();
+        sharedPreferences.clear();
+        DatabaseHelper.instance.deleteEverything();
+        Get.offAllNamed(AppRoutes.login);
+      });
+    } else {
+      EasyLoading.showInfo("Your Are OFFLINE!");
+    }
   }
 }

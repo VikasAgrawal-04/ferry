@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:goa/src/controllers/payment_controller.dart/paytm_payment_controller.dart';
 import 'package:goa/src/core/utils/helpers/database_helpers.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final general = Get.find<PaytmController>();
     TextTheme theme = Theme.of(context).textTheme;
     return Scaffold(
         backgroundColor: Colors.white,
@@ -110,6 +112,36 @@ class SettingScreen extends StatelessWidget {
                                   style: theme.bodyMedium?.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white)))),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.defaultDialog(
+                            title: 'Delete Account',
+                            middleText:
+                                'Are you sure you want to delete your account?',
+                            onCancel: () {
+                              Get.back();
+                            },
+                            onConfirm: () async {
+                              await general.deleteAccount();
+                            });
+                      },
+                      child: Card(
+                        margin: EdgeInsets.only(bottom: 1.5.h),
+                        color: AppColors.greenBg,
+                        child: Container(
+                          width: 100.w,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 1.h, horizontal: 4.w),
+                          child: Text(
+                            "Delete Account",
+                            textAlign: TextAlign.center,
+                            style: theme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
