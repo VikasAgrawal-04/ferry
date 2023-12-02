@@ -7,6 +7,7 @@ import 'package:goa/src/controllers/network/network_controller.dart';
 import 'package:goa/src/controllers/payment_controller.dart/paytm_payment_controller.dart';
 import 'package:goa/src/core/utils/constants/api_endpoints.dart';
 import 'package:goa/src/core/utils/environment.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DependencyInjector {
   static void inject() {
@@ -17,6 +18,10 @@ class DependencyInjector {
   static void _injectDio() {
     final dio = Dio(BaseOptions(baseUrl: EndPoints.baseUrl));
     final paytmDio = Dio(BaseOptions(baseUrl: Environment.paytmBaseUrl));
+    dio.interceptors
+        .add(PrettyDioLogger(requestHeader: true, requestBody: true));
+    paytmDio.interceptors
+        .add(PrettyDioLogger(requestHeader: true, requestBody: true));
     Get.lazyPut<Dio>(() => dio);
     Get.lazyPut<Dio>(() => paytmDio, tag: 'paytm');
   }

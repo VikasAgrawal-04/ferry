@@ -120,16 +120,6 @@ class Helpers {
       dynamic data,
       dynamic listData,
       FormData? formData}) async {
-    var logger = Logger(
-      printer: PrettyPrinter(
-          methodCount: 2,
-          errorMethodCount: 8,
-          lineLength: 50,
-          colors: true,
-          printEmojis: true,
-          printTime: false),
-    );
-    logger.d("PayLoad ${queryParams ?? data ?? listData}");
     try {
       Response response;
 
@@ -160,15 +150,10 @@ class Helpers {
           return null;
       }
 
-      logger.d(
-          "$path response status code ${response.statusCode} message is ${response.statusMessage}");
-
       if (response.statusCode == 200) {
         print(response.data.runtimeType);
         return response.data as Map<String, dynamic>;
       } else if (response.statusCode == 400 || response.statusCode == 202) {
-        logger.e(
-            "Failed response ${response.data} and ${response.statusMessage} and ${response.statusCode} ");
         throw ServerException(
             code: response.statusCode, message: response.statusMessage);
       } else {
