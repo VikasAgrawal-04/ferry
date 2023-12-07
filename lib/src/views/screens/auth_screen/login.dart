@@ -10,6 +10,7 @@ import 'package:goa/src/core/utils/constants/keys.dart';
 import 'package:goa/src/views/widgets/button/custom_button.dart';
 import 'package:goa/src/views/widgets/textfield/custom_text_field.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 import '../../../core/utils/helpers/helpers.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -65,7 +66,19 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 15.h),
-                Image.asset("assets/images/main7.PNG"),
+                Image.asset(
+                  "assets/images/main7.PNG",
+                  frameBuilder:
+                      (context, child, frame, wasSynchronouslyLoaded) {
+                    if (wasSynchronouslyLoaded) return child;
+                    return AnimatedOpacity(
+                      opacity: frame == null ? 0 : 1,
+                      duration: const Duration(seconds: 2),
+                      curve: Curves.easeOut,
+                      child: child,
+                    );
+                  },
+                ),
                 SizedBox(height: 2.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.w),

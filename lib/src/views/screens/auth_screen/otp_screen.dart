@@ -28,7 +28,18 @@ class _OtpScreeenState extends State<OtpScreeen> {
         child: Column(
           children: [
             SizedBox(height: 5.h),
-            Image.asset('assets/images/main6.PNG'),
+            Image.asset(
+              'assets/images/main6.PNG',
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) return child;
+                return AnimatedOpacity(
+                  opacity: frame == null ? 0 : 1,
+                  duration: const Duration(seconds: 2),
+                  curve: Curves.easeOut,
+                  child: child,
+                );
+              },
+            ),
             SizedBox(height: 5.h),
             Text("Confirm OTP", style: theme.displayMedium),
             SizedBox(height: 1.h),

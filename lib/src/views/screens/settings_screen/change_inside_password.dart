@@ -30,13 +30,45 @@ class _ChangeInsidePassState extends State<ChangeInsidePass> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
+      bottomNavigationBar: CustomButtonNew(
+        margin: EdgeInsets.symmetric(horizontal: 6.w),
+        text: 'Submit',
+        onTap: () async {
+          if (_formKey.currentState!.validate()) {
+            if ((passwordController.text == confirmPasswordController.text)) {
+              await authController.changePassword(
+                  oldPass: oldPassController.text,
+                  newPass: passwordController.text);
+            } else {
+              EasyLoading.showError(
+                  'Passwords do not match. Please try again.');
+            }
+          }
+        },
+        height: 5.5.h,
+        borderRadius: 20,
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 4.h),
-            Image.asset("assets/images/main7.PNG"),
+            SizedBox(
+                height: 40.h,
+                child: Image.asset(
+                  "assets/images/main7.PNG",
+                  frameBuilder:
+                      (context, child, frame, wasSynchronouslyLoaded) {
+                    if (wasSynchronouslyLoaded) return child;
+                    return AnimatedOpacity(
+                      opacity: frame == null ? 0 : 1,
+                      duration: const Duration(seconds: 2),
+                      curve: Curves.easeOut,
+                      child: child,
+                    );
+                  },
+                )),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 6.w),
               child: Form(
@@ -50,7 +82,7 @@ class _ChangeInsidePassState extends State<ChangeInsidePass> {
                       style: theme.bodyMedium
                           ?.copyWith(fontWeight: FontWeight.w500),
                     ),
-                    SizedBox(height: 0.5.h),
+                    SizedBox(height: 1.5.h),
                     CustomTextFieldNew(
                       control: oldPassController,
                       type: "password",
@@ -66,7 +98,7 @@ class _ChangeInsidePassState extends State<ChangeInsidePass> {
                       },
                       textInputAction: TextInputAction.next,
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: 2.h),
                     CustomTextFieldNew(
                       control: passwordController,
                       type: "password",
@@ -82,7 +114,7 @@ class _ChangeInsidePassState extends State<ChangeInsidePass> {
                       },
                       textInputAction: TextInputAction.next,
                     ),
-                    SizedBox(height: 1.h),
+                    SizedBox(height: 2.h),
                     CustomTextFieldNew(
                       control: confirmPasswordController,
                       type: "password",
@@ -93,26 +125,6 @@ class _ChangeInsidePassState extends State<ChangeInsidePass> {
                       isNumber: false,
                       style: theme.bodySmall,
                       textInputAction: TextInputAction.done,
-                    ),
-                    SizedBox(height: 2.h),
-                    CustomButtonNew(
-                      margin: EdgeInsets.symmetric(horizontal: 6.w),
-                      text: 'Submit',
-                      onTap: () async {
-                        if (_formKey.currentState!.validate()) {
-                          if ((passwordController.text ==
-                              confirmPasswordController.text)) {
-                            await authController.changePassword(
-                                oldPass: oldPassController.text,
-                                newPass: passwordController.text);
-                          } else {
-                            EasyLoading.showError(
-                                'Passwords do not match. Please try again.');
-                          }
-                        }
-                      },
-                      height: 5.5.h,
-                      borderRadius: 20,
                     ),
                   ],
                 ),

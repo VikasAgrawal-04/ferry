@@ -36,7 +36,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 4.h),
-            Image.asset("assets/images/main7.PNG"),
+            Image.asset(
+              "assets/images/main7.PNG",
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) return child;
+                return AnimatedOpacity(
+                  opacity: frame == null ? 0 : 1,
+                  duration: const Duration(seconds: 2),
+                  curve: Curves.easeOut,
+                  child: child,
+                );
+              },
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 6.w),
               child: Form(

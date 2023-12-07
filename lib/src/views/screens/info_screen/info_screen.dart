@@ -50,7 +50,7 @@ class _InfoScreenState extends State<InfoScreen> {
           ),
           Text("Information", style: theme.displayLarge),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
             child: Column(
               children: [
                 InkWell(
@@ -126,7 +126,17 @@ class _InfoScreenState extends State<InfoScreen> {
                 ),
               ],
             ),
-          )
+          ),
+          Divider(
+            endIndent: 6.w,
+            indent: 6.w,
+          ),
+          const Spacer(),
+          Center(
+            child: Text('By River Navigation Department',
+                style: theme.displaySmall),
+          ),
+          SizedBox(height: 2.h),
         ],
       ),
     );
