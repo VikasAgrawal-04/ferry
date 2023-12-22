@@ -38,15 +38,11 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <queries>
         <!-- If your app checks for call support -->
         <intent>
             <action android:name="android.intent.action.DIAL" />
             <data android:scheme="tel" />
-        </intent>
-        <intent>
-            <action android:name="android.support.customtabs.action.CustomTabsService" />
         </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
