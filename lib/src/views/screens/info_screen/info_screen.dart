@@ -50,7 +50,7 @@ class _InfoScreenState extends State<InfoScreen> {
           ),
           Text("Information", style: theme.displayLarge),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Column(
               children: [
                 InkWell(
@@ -91,7 +91,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 InkWell(
                   onTap: () {
                     Get.toNamed(AppRoutes.infoDetails,
-                        arguments: generalController.appInfo[2]);
+                        arguments: generalController.appInfo[1]);
                   },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
@@ -109,7 +109,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 InkWell(
                   onTap: () {
                     Get.toNamed(AppRoutes.infoDetails,
-                        arguments: generalController.appInfo[1]);
+                        arguments: generalController.appInfo[0]);
                   },
                   child: Card(
                       margin: EdgeInsets.only(bottom: 1.5.h),
@@ -124,6 +124,22 @@ class _InfoScreenState extends State<InfoScreen> {
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white)))),
                 ),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.returnScreen);
+                  },
+                  child: Card(
+                      color: AppColors.greenBg,
+                      child: Container(
+                          width: 100.w,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 1.h, horizontal: 4.w),
+                          child: Text("Return/Refund",
+                              textAlign: TextAlign.center,
+                              style: theme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white)))),
+                ),
               ],
             ),
           ),
@@ -131,12 +147,10 @@ class _InfoScreenState extends State<InfoScreen> {
             endIndent: 6.w,
             indent: 6.w,
           ),
-          const Spacer(),
           Center(
             child: Text('By River Navigation Department',
                 style: theme.displaySmall),
           ),
-          SizedBox(height: 2.h),
         ],
       ),
     );

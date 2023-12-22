@@ -2,7 +2,7 @@
     package="com.codanto.goaferryapp">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="Goa Ferry"
+        android:label="River Navigation App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:requestLegacyExternalStorage="true">

@@ -143,9 +143,17 @@ class SettingScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Divider(
+                      endIndent: 6.w,
+                      indent: 6.w,
+                    ),
+                    Center(
+                      child: Text('By River Navigation Department',
+                          style: theme.displaySmall),
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ));

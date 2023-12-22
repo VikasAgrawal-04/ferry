@@ -17,4 +17,5 @@ class AppRoutes {
   static const String paperPass = '/paper-pass';
   static const String scanPaperPass = '/scan-paper-pass';
   static const String qrScreen = '/qr-screen';
+  static const String returnScreen = '/return-screen';
 }
