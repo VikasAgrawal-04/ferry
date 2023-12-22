@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:goa/src/core/utils/helpers/helpers.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ReturnScreen extends StatelessWidget {
@@ -19,12 +20,23 @@ class ReturnScreen extends StatelessWidget {
             Text(
                 'All sales are final and no refund will be issued. The return of the of the purchased goods are not allowed through the app directly. In case of disputes of such cases you can contact us via Email or Phone number.',
                 style: context.textTheme.bodyMedium),
-            SizedBox(height: 2.h),
-            const Spacer(),
-            Text('Email: admin-river.goa@nic.in',
-                style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+            SizedBox(height: 25.h),
+            GestureDetector(
+              onTap: () {
+                Helpers.email('admin-river.goa@nic.in');
+              },
+              child: Text('Email: admin-river.goa@nic.in',
+                  style: context.textTheme.bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w600)),
+            ),
             SizedBox(height: 1.h),
-            Text('Phone: 0832 2410790', style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600))
+            GestureDetector(
+                onTap: () {
+                  Helpers.makeCall('8322410790');
+                },
+                child: Text('Phone: 0832 2410790',
+                    style: context.textTheme.bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w600)))
           ],
         ),
       ),
