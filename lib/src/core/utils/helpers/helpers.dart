@@ -304,7 +304,7 @@ class Helpers {
   }
 
   static Future<void> makeCall(String number) async {
-    final url = Uri.parse('tel:+91$number');
+    final url = Uri.parse('tel:$number');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {

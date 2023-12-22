@@ -32,7 +32,7 @@ class ReturnScreen extends StatelessWidget {
             SizedBox(height: 1.h),
             GestureDetector(
                 onTap: () {
-                  Helpers.makeCall('8322410790');
+                  Helpers.makeCall('08322410790');
                 },
                 child: Text('Phone: 0832 2410790',
                     style: context.textTheme.bodyMedium
