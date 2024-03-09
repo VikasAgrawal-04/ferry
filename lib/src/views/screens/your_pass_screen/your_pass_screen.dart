@@ -87,7 +87,7 @@ class _YourPassScreenState extends State<YourPassScreen> {
       body: Column(
         children: [
           Obx(() => SizedBox(
-                height: 65.h,
+                // height: 65.h,
                 child: routeController.onlyYourPasses.isEmpty
                     ? Center(
                         child: Text(
@@ -99,8 +99,6 @@ class _YourPassScreenState extends State<YourPassScreen> {
                     : Column(
                         children: [
                           SizedBox(
-                            height: 58.h,
-                            width: 100.w,
                             child: Obx(
                               () => WhiteBoxCard(
                                   margin: EdgeInsets.only(
@@ -129,10 +127,9 @@ class _YourPassScreenState extends State<YourPassScreen> {
                                         ),
                                         Positioned(
                                             left: 5.w,
-                                            top: -2.5.h,
                                             child: Container(
-                                              height: 10.h,
-                                              width: 20.w,
+                                              height: 6.h,
+                                              width: 13.w,
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 2.w,
                                                   vertical: 0.5.h),

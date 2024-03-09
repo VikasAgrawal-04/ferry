@@ -11,7 +11,6 @@ import 'package:goa/src/views/screens/info_screen/info_detail_screen.dart';
 import 'package:goa/src/views/screens/info_screen/return_refund_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/paper_pass_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/pass_screen.dart';
-import 'package:goa/src/views/screens/passes_screen/qr_screen.dart';
 import 'package:goa/src/views/screens/passes_screen/route_listing.dart';
 import 'package:goa/src/views/screens/passes_screen/vehicle_screen.dart';
 import 'package:goa/src/views/screens/settings_screen/change_inside_password.dart';
@@ -45,7 +44,6 @@ class AppRouter {
     GetPage(name: AppRoutes.contactUs, page: () => const ContactUs()),
     GetPage(name: AppRoutes.paperPass, page: () => const PaperPassScreen()),
     GetPage(name: AppRoutes.scanPaperPass, page: () => const ScanPaperPass()),
-    GetPage(name: AppRoutes.qrScreen, page: () => const QrScreen()),
-    GetPage(name: AppRoutes.returnScreen, page: ()=> const ReturnScreen())
+    GetPage(name: AppRoutes.returnScreen, page: () => const ReturnScreen())
   ];
 }

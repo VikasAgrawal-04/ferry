@@ -28,6 +28,7 @@ class EndPoints {
   static const String deleteAccount = 'delete-account';
 
   //Payment
-  static const String createChecksum = 'order';
+  static const String createChecksum = 'phonepe';
+  static const String phonepeResponse = 'phonepe-response';
   static const String paytmCallback = 'paytm-callback';
 }

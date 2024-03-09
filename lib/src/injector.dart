@@ -17,7 +17,7 @@ class DependencyInjector {
 
   static void _injectDio() {
     final dio = Dio(BaseOptions(baseUrl: EndPoints.baseUrl));
-    final paytmDio = Dio(BaseOptions(baseUrl: Environment.paytmBaseUrl));
+    final paytmDio = Dio(BaseOptions(baseUrl: Environment.baseurl));
     dio.interceptors
         .add(PrettyDioLogger(requestHeader: true, requestBody: true));
     paytmDio.interceptors

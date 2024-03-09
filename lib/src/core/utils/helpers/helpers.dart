@@ -184,7 +184,7 @@ class Helpers {
 
   static Future<void> downloadQrImage(qrImg, String amount) async {
     final deviceInfo = await DeviceInfoPlugin().androidInfo;
-    final directory;
+    final Directory? directory;
     if (Platform.isAndroid) {
       directory = Directory('/storage/emulated/0/Download');
     } else {

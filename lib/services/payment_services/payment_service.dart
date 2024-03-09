@@ -8,11 +8,11 @@ import '../../src/core/errors/failures.dart';
 import '../../src/core/utils/constants/keys.dart';
 import '../../src/models/payment/payment_model.dart';
 
-class PaytmService {
+class PaymentService {
   final Dio dio;
-  PaytmService({required this.dio});
+  PaymentService({required this.dio});
 
-  Future<Either<Failure, PaytmCheckSum>> generateChecksum(
+  Future<Either<Failure, CheckSum>> generateChecksum(
       {required int passId, required int amount}) async {
     try {
       final userId = Helpers.getString(key: Keys.userId);
@@ -25,7 +25,7 @@ class PaytmService {
             'passid': passId,
             'amount': amount
           });
-      return Right(PaytmCheckSum.fromJson(response!));
+      return Right(CheckSum.fromJson(response!));
     } on ServerException catch (error) {
       return Left(ServerFailure(message: error.message.toString()));
     }

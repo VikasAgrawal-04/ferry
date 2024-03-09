@@ -1,22 +1,28 @@
 // To parse this JSON data, do
 //
-//     final paytmCheckSum = paytmCheckSumFromJson(jsonString);
+//     final checkSum = checkSumFromJson(jsonString);
 
 import 'dart:convert';
 
-PaytmCheckSum paytmCheckSumFromJson(String str) =>
-    PaytmCheckSum.fromJson(json.decode(str));
+CheckSum checkSumFromJson(String str) => CheckSum.fromJson(json.decode(str));
 
-String paytmCheckSumToJson(PaytmCheckSum data) => json.encode(data.toJson());
+String checkSumToJson(CheckSum data) => json.encode(data.toJson());
 
-class PaytmCheckSum {
-  Response response;
+class CheckSum {
+  final Response response;
 
-  PaytmCheckSum({
+  CheckSum({
     required this.response,
   });
 
-  factory PaytmCheckSum.fromJson(Map<String, dynamic> json) => PaytmCheckSum(
+  CheckSum copyWith({
+    Response? response,
+  }) =>
+      CheckSum(
+        response: response ?? this.response,
+      );
+
+  factory CheckSum.fromJson(Map<String, dynamic> json) => CheckSum(
         response: Response.fromJson(json["response"]),
       );
 
@@ -26,101 +32,138 @@ class PaytmCheckSum {
 }
 
 class Response {
-  Head head;
-  Body body;
+  final bool success;
+  final String code;
+  final String message;
+  final Data data;
 
   Response({
-    required this.head,
-    required this.body,
+    required this.success,
+    required this.code,
+    required this.message,
+    required this.data,
   });
+
+  Response copyWith({
+    bool? success,
+    String? code,
+    String? message,
+    Data? data,
+  }) =>
+      Response(
+        success: success ?? this.success,
+        code: code ?? this.code,
+        message: message ?? this.message,
+        data: data ?? this.data,
+      );
 
   factory Response.fromJson(Map<String, dynamic> json) => Response(
-        head: Head.fromJson(json["head"]),
-        body: Body.fromJson(json["body"]),
+        success: json["success"],
+        code: json["code"],
+        message: json["message"],
+        data: Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "head": head.toJson(),
-        "body": body.toJson(),
+        "success": success,
+        "code": code,
+        "message": message,
+        "data": data.toJson(),
       };
 }
 
-class Body {
-  ResultInfo resultInfo;
-  String qrCodeId;
-  String qrData;
-  String image;
+class Data {
+  final String merchantId;
+  final String merchantTransactionId;
+  final InstrumentResponse instrumentResponse;
 
-  Body({
-    required this.resultInfo,
-    required this.qrCodeId,
-    required this.qrData,
-    required this.image,
+  Data({
+    required this.merchantId,
+    required this.merchantTransactionId,
+    required this.instrumentResponse,
   });
 
-  factory Body.fromJson(Map<String, dynamic> json) => Body(
-        resultInfo: ResultInfo.fromJson(json["resultInfo"]),
-        qrCodeId: json["qrCodeId"],
-        qrData: json["qrData"],
-        image: json["image"],
+  Data copyWith({
+    String? merchantId,
+    String? merchantTransactionId,
+    InstrumentResponse? instrumentResponse,
+  }) =>
+      Data(
+        merchantId: merchantId ?? this.merchantId,
+        merchantTransactionId:
+            merchantTransactionId ?? this.merchantTransactionId,
+        instrumentResponse: instrumentResponse ?? this.instrumentResponse,
+      );
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        merchantId: json["merchantId"],
+        merchantTransactionId: json["merchantTransactionId"],
+        instrumentResponse:
+            InstrumentResponse.fromJson(json["instrumentResponse"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "resultInfo": resultInfo.toJson(),
-        "qrCodeId": qrCodeId,
-        "qrData": qrData,
-        "image": image,
+        "merchantId": merchantId,
+        "merchantTransactionId": merchantTransactionId,
+        "instrumentResponse": instrumentResponse.toJson(),
       };
 }
 
-class ResultInfo {
-  String resultStatus;
-  String resultCode;
-  String resultMsg;
+class InstrumentResponse {
+  final String type;
+  final RedirectInfo redirectInfo;
 
-  ResultInfo({
-    required this.resultStatus,
-    required this.resultCode,
-    required this.resultMsg,
+  InstrumentResponse({
+    required this.type,
+    required this.redirectInfo,
   });
 
-  factory ResultInfo.fromJson(Map<String, dynamic> json) => ResultInfo(
-        resultStatus: json["resultStatus"],
-        resultCode: json["resultCode"],
-        resultMsg: json["resultMsg"],
+  InstrumentResponse copyWith({
+    String? type,
+    RedirectInfo? redirectInfo,
+  }) =>
+      InstrumentResponse(
+        type: type ?? this.type,
+        redirectInfo: redirectInfo ?? this.redirectInfo,
+      );
+
+  factory InstrumentResponse.fromJson(Map<String, dynamic> json) =>
+      InstrumentResponse(
+        type: json["type"],
+        redirectInfo: RedirectInfo.fromJson(json["redirectInfo"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "resultStatus": resultStatus,
-        "resultCode": resultCode,
-        "resultMsg": resultMsg,
+        "type": type,
+        "redirectInfo": redirectInfo.toJson(),
       };
 }
 
-class Head {
-  String responseTimestamp;
-  String version;
-  String clientId;
-  String signature;
+class RedirectInfo {
+  final String url;
+  final String method;
 
-  Head({
-    required this.responseTimestamp,
-    required this.version,
-    required this.clientId,
-    required this.signature,
+  RedirectInfo({
+    required this.url,
+    required this.method,
   });
 
-  factory Head.fromJson(Map<String, dynamic> json) => Head(
-        responseTimestamp: json["responseTimestamp"],
-        version: json["version"],
-        clientId: json["clientId"],
-        signature: json["signature"],
+  RedirectInfo copyWith({
+    String? url,
+    String? method,
+  }) =>
+      RedirectInfo(
+        url: url ?? this.url,
+        method: method ?? this.method,
+      );
+
+  factory RedirectInfo.fromJson(Map<String, dynamic> json) => RedirectInfo(
+        url: json["url"],
+        method: json["method"],
       );
 
   Map<String, dynamic> toJson() => {
-        "responseTimestamp": responseTimestamp,
-        "version": version,
-        "clientId": clientId,
-        "signature": signature,
+        "url": url,
+        "method": method,
       };
 }
